@@ -24,28 +24,30 @@ IDE Installation & Build Guide
 * Click on <b>Get from Version Control</b> or in case the welcome page doesn't open, go to <b>File Menu->New</b> and select <b>Project From Version Control</b>
 * Select <b>Repository URL</b> from left menu
 * Select <b>Git</b> from <b>Version control</b> dropdown menu
-* Paste this URL <b>https://github.com/vdotok/Android-m2m.git</b> in URL section
+* Paste this URL <b>https://github.com/vdotok/Android-CombineApp</b> in URL section
 * Click on <b>Clone</b> button and wait for build.gradle file. You can see the progress at the bottom of <b>Android Studio</b>
 * Let the <b>Android Studio</b> install the components
 
 Bravo! You’ve successfully configured the project in Android Studio.
 
 <b>Download Call Lib:</b>
-* Go to: https://sdk.vdotok.com/Android-SDKs/ and download “<b>streamingSDK.aar</b>” file
+* Go to: https://sdk.vdotok.com/Android-SDKs/ and download “<b>streamingSDK.aar</b>” and “<b>connect.aar</b>” files
 
 <b>Configure Lib:</b>
 * In <b> Android Studio File Explorer</b>, select <b>Project</b>
 <img width="498" alt="123636395-41e08980-d836-11eb-8643-429d6e5510d5" src="https://user-images.githubusercontent.com/86282129/123811571-cb628b00-d90c-11eb-9584-b5a8f12957dc.png">
 
 * Go to <b>VdoTok-Call -> App -> libs</b>
-* Add the downloaded <b>streamingSDK.aar</b> file in the libs folder
-<img width="468" alt="Screenshot 2021-10-06 at 2 15 14 PM" src="https://user-images.githubusercontent.com/86282129/136174906-b6f0ba56-bb67-4680-8641-43fbc02de479.png">
+* Add the downloaded <b>streamingSDK.aar</b> and <b>connect.aar</b> files in the libs folder
+<img width="463" alt="Screenshot 2022-03-15 at 4 45 22 PM" src="https://user-images.githubusercontent.com/91589156/158371707-79ee2a8c-d8ed-4823-9d23-9802eb10e3eb.png">
+
 <li> After this, click on gradle sync icon from the toolbar
 <img width="21" alt="Screenshot 2021-12-02 at 4 43 51 PM" src="https://user-images.githubusercontent.com/88875529/144415902-78883f01-f5be-4f99-a6e3-d9ea44a71936.png"> to sync project.</li></br>
 
-<b>Project Signup and Project ID:</b>
-* Register for “Call Server” at [VdoTok](https://console.vdotok.com) and get the <b>Project ID</b>
-* From file explorer, double-click on <b>vdotok-call -> app -> src -> main -> java -> com -> vdotok -> many2many -> utils -> ApplicationConstants</b> replace <b>SDK_PROJECT_ID</b> with your own <b>Project Id</b>
+<b>Project Signup:</b>
+* Register "Server" at [VdoTok](https://console.vdotok.com) and get the <b>Project ID</b> and <b>API Service URL</b>
+* From file explorer, double-click on <b>vdotok -> app -> src -> main -> java -> com -> vdotok -> app -> utils -> ApplicationConstants</b> replace <b>SDK_PROJECT_ID</b> with your own <b>Project Id</b>
+* From file explorer, double-click on <b>vdotok -> Network -> src -> main -> java -> com -> vdotok -> network -> utils -> Constants</b> replace <b>BASE_URL</b> with your own <b>API Service URL</b>
 
 <b>Device Setting:</b>
 * To connect a device, enable <b>“developer mode”</b> and <b>“USB debugging”</b> by following the device-specific steps provided [here.](https://developer.android.com/studio/debug/dev-options)
