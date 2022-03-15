@@ -9,7 +9,9 @@ import com.vdotok.streaming.commands.CallInfoResponse
 import com.vdotok.streaming.commands.RegisterResponse
 import com.vdotok.streaming.enums.EnumConnectionStatus
 import com.vdotok.streaming.models.CallParams
+import com.vdotok.streaming.models.SessionDataModel
 import com.vdotok.streaming.models.SessionStateInfo
+import com.vdotok.streaming.models.Usage
 import org.webrtc.VideoTrack
 
 
@@ -40,4 +42,6 @@ interface CallBackManager {
     fun onTimeTicks(timer: String)
     fun onSSSessionReady(mediaProjection: MediaProjection?)
     fun onPublicURL(url: String)
+    fun sendCurrentDataUsage(sessionKey: String, usage: Usage){}
+    fun sendEndDataUsage(sessionKey: String, sessionDataModel: SessionDataModel){}
 }

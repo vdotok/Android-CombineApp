@@ -319,6 +319,33 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         }
     }
 
+    override fun sendCurrentDataUsage(sessionKey: String, usage: Usage) {
+        viewModel.getOwnRefID().let { refId ->
+            Log.e(
+                "StatsLogger",
+                "currentSentUsage: ${usage.currentSentBytes}, currentReceivedUsage: ${usage.currentReceivedBytes}"
+            )
+            viewModel.appManager.getCallClient()?.sendEndCallLogs(
+                refId = refId,
+                sessionKey = sessionKey,
+                stats = PartialCallLogs(
+                    upload_bytes = usage.currentSentBytes.toString(),
+                    download_bytes = usage.currentReceivedBytes.toString()
+                )
+            )
+        }
+    }
+
+    override fun sendEndDataUsage(sessionKey: String, sessionDataModel: SessionDataModel) {
+        viewModel.getOwnRefID().let { refId ->
+            Log.e("StatsLogger", "sessionData: $sessionDataModel")
+            viewModel.appManager.getCallClient()?.sendEndCallLogs(
+                refId = refId,
+                sessionKey = sessionKey,
+                stats = sessionDataModel
+            )
+        }
+    }
 
     fun enableProximitySensor(enable: Boolean) {
         if (enable) {
