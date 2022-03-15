@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+        <variable
+            name="showIcon"
+            type="Boolean" />
+
+        <variable
+            name="showBackIcon"
+            type="Boolean" />
+
+        <variable
+            name="showCheckIcon"
+            type="Boolean" />
+
+        <variable
+            name="emptyUserList"
+            type="Boolean" />
+
+        <variable
+            name="toolbarTitle"
+            type="String" />
+
+        <variable
+            name="search"
+            type="androidx.databinding.ObservableField&lt;String&gt;" />
+        <variable
+            name="isActiveSession"
+            type="androidx.databinding.ObservableBoolean" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+
+        <include
+            android:id="@+id/customToolbar"
+            layout="@layout/custom_toolbar"
+            bind:isActiveSession="@{isActiveSession}"
+            bind:showIcon="@{showIcon}"
+            bind:showBackIcon="@{showBackIcon}"
+            bind:showCheckIcon="@{showCheckIcon}"
+            bind:toolbarTitle="@{toolbarTitle}" />
+
+        <EditText
+            android:id="@+id/searchEditText"
+            style="@style/Theme_search_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_search_bar"
+            android:text="@={search}"
+            android:textAlignment="viewStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customToolbar" />
+
+        <TextView
+            android:id="@+id/tv_selectContact"
+            style="@style/Theme_TextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|start"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/contacts"
+            android:textAlignment="viewStart"
+            android:textColor="@color/indigo"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/searchEditText"
+            app:layout_constraintStart_toStartOf="@id/searchEditText"
+            app:layout_constraintTop_toBottomOf="@+id/searchEditText" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvUserList"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:orientation="vertical"
+            android:visibility="@{emptyUserList? View.GONE: View.VISIBLE, default = visible}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/searchEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_selectContact"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_all_users_list_with_actions" />
+
+        <TextView
+            android:id="@+id/noUserFound"
+            style="@style/Theme_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_user_found"
+            android:textAlignment="center"
+            android:visibility="@{emptyUserList? View.VISIBLE: View.GONE, default = gone}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/searchEditText"
+            app:layout_constraintStart_toStartOf="@id/searchEditText"
+            app:layout_constraintTop_toBottomOf="@+id/tv_selectContact" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="groupTitle"
+            type="androidx.databinding.ObservableField&lt;String&gt;" />
+
+        <variable
+            name="typingUserName"
+            type="androidx.databinding.ObservableField&lt;String&gt;" />
+
+        <variable
+            name="showTypingText"
+            type="androidx.databinding.ObservableBoolean" />
+
+        <variable
+            name="isActiveSession"
+            type="androidx.databinding.ObservableBoolean" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/arrowBack"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="23dp"
+            android:contentDescription="@string/back_arrow_description"
+            android:src="@drawable/arrow_back" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/groupBroadcast"
+            app:layout_constraintStart_toEndOf="@+id/arrowBack"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/Theme_Toolbar_Chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:text="@{groupTitle}"
+                android:textColor="@color/sea_blue"
+                tools:text="Group Name" />
+
+            <TextView
+                android:id="@+id/status"
+                style="@style/Theme_Toolbar_Chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:padding="0dp"
+                android:singleLine="true"
+                android:text="@{typingUserName}"
+                android:textColor="@color/parrot_green"
+                android:textStyle="normal"
+                android:visibility="@{showTypingText ? View.VISIBLE : View.GONE, default = visible}"
+                tools:text="Norgic is typing....." />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/groupBroadcast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:contentDescription="@string/checkmark_description"
+            android:clickable="@{isActiveSession? false : true, default = true}"
+            android:src="@{isActiveSession? @drawable/broadcast_icon_group_disabled : @drawable/broadcast_icon_group, default = @drawable/broadcast_icon_group}"
+            app:layout_constraintBottom_toBottomOf="@+id/audioCall"
+            app:layout_constraintEnd_toStartOf="@+id/audioCall"
+            app:layout_constraintTop_toTopOf="@+id/audioCall" />
+
+        <ImageView
+            android:id="@+id/audioCall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:contentDescription="@string/checkmark_description"
+            android:clickable="@{isActiveSession? false : true, default = true}"
+            android:src="@{isActiveSession? @drawable/ic_call_disable : @drawable/ic_call_icon, default = @drawable/ic_call_icon}"
+            app:layout_constraintBottom_toBottomOf="@+id/videoCall"
+            app:layout_constraintEnd_toStartOf="@+id/videoCall"
+            app:layout_constraintTop_toTopOf="@+id/videoCall" />
+
+        <ImageView
+            android:id="@+id/videoCall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:contentDescription="@string/checkmark_description"
+            android:clickable="@{isActiveSession? false : true, default = true}"
+            android:src="@{isActiveSession? @drawable/ic_video_call_disable : @drawable/ic_video_call, default = @drawable/ic_video_call}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

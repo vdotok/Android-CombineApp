@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="groupModel"
+            type="com.vdotok.network.models.GroupModel" />
+
+        <variable
+            name="status"
+            type="Boolean" />
+
+        <variable
+            name="showLastMessage"
+            type="Boolean" />
+
+        <variable
+            name="showMessageCount"
+            type="Boolean" />
+
+        <variable
+            name="showMessage"
+            type="Boolean" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/groupView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/groupTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/manrope_medium_500"
+            android:textColor="@color/grayish_black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Group name" />
+
+        <TextView
+            android:id="@+id/img_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/rounded_red"
+            android:fontFamily="@font/inter_regular_400"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="@{showMessageCount? View.VISIBLE : View.GONE, default = gone}"
+            app:layout_constraintStart_toEndOf="@id/groupTitle"
+            app:layout_constraintTop_toTopOf="@id/groupTitle" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/un_read_messages"
+            style="@style/Theme_UnRead_Messages"
+            android:visibility="@{showMessage? View.VISIBLE : View.INVISIBLE, default = invisible}"
+            app:layout_constraintBottom_toTopOf="@id/view_divider"
+            app:layout_constraintEnd_toStartOf="@id/tv_status"
+            app:layout_constraintStart_toStartOf="@+id/groupTitle"
+            app:layout_constraintTop_toBottomOf="@id/groupTitle" />
+
+        <TextView
+            android:id="@+id/tv_last_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/Theme_UnRead_Messages"
+            android:textColor="@color/lightest_indigo"
+            android:visibility="@{showLastMessage? View.VISIBLE : View.INVISIBLE, default = invisible}"
+            app:layout_constraintBottom_toTopOf="@id/view_divider"
+            app:layout_constraintEnd_toStartOf="@id/tv_status"
+            app:layout_constraintStart_toStartOf="@+id/groupTitle"
+            app:layout_constraintTop_toBottomOf="@id/groupTitle"
+            tools:text="Last Message" />
+
+        <View
+            android:id="@+id/view_divider"
+            android:layout_width="wrap_content"
+            android:layout_height="0.7dp"
+            android:layout_marginTop="11dp"
+            android:background="@color/blueish_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrierGroupBottom" />
+
+        <ImageView
+            android:id="@+id/img_more"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_horizontal_options"
+            app:layout_constraintBottom_toTopOf="@id/tv_status"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:fontFamily="@font/inter_regular_400"
+            android:gravity="center"
+            android:textColor="@{status ? @color/tile_green_dark : @color/red, default = @color/tile_green_dark}"
+            android:textSize="12sp"
+            tools:text="3/3 online"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_more" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierGroupBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tv_last_message,tv_message"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

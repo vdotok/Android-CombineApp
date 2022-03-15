@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/callFragment">
+
+    <fragment
+        android:id="@+id/callFragment"
+        android:name="com.vdotok.app.feature.call.fragments.InOutCallFragment"
+        android:label="@string/call_fragment"
+        tools:layout="@layout/fragment_call">
+
+        <action
+            android:id="@+id/action_move_to_connect_call"
+            app:destination="@id/callConnectedFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/callConnectedFragment"
+        android:name="com.vdotok.app.feature.call.fragments.ConnectedCallFragment"
+        android:label="@string/call_connected_fragment"
+        tools:layout="@layout/fragment_call_connected" />
+
+</navigation>

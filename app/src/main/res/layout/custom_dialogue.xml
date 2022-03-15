@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="isGroupNameEmpty"
+            type="androidx.databinding.ObservableBoolean" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:gravity="center">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minWidth="250dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_group_name"
+                    style="@style/Dialog_TextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="@string/create_group_dialog_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_close"
+                    app:layout_constraintEnd_toStartOf="@+id/img_close"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/img_close" />
+
+                <ImageView
+                    android:id="@+id/img_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginEnd="24dp"
+                    android:src="@drawable/ic_close"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_create_group_heading"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:fontFamily="@font/inter_regular_400"
+                    android:gravity="start"
+                    android:text="@string/name_group_chat"
+                    android:textColor="@color/grayish_black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@+id/img_close"
+                    app:layout_constraintStart_toStartOf="@+id/tv_group_name"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_group_name" />
+
+                <EditText
+                    android:id="@+id/edt_group_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@null"
+                    android:fontFamily="@font/poppins_regular"
+                    android:hint="@string/group_name_hint"
+                    android:singleLine="true"
+                    android:textColor="@color/tile_green_dark"
+                    android:textColorHint="@color/tile_green_light"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@id/tv_create_group_heading"
+                    app:layout_constraintStart_toStartOf="@id/tv_create_group_heading"
+                    app:layout_constraintTop_toBottomOf="@id/tv_create_group_heading" />
+
+                <View
+                    android:id="@+id/view_divider"
+                    android:layout_width="0dp"
+                    android:layout_height="0.7dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@color/blueish_white"
+                    app:layout_constraintEnd_toEndOf="@id/edt_group_name"
+                    app:layout_constraintStart_toStartOf="@id/edt_group_name"
+                    app:layout_constraintTop_toBottomOf="@id/edt_group_name" />
+
+                <Button
+                    android:id="@+id/btn_done"
+                    style="@style/Theme_Button_Activated"
+                    android:layout_width="196dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="44dp"
+                    android:layout_marginBottom="24dp"
+                    android:enabled="@{isGroupNameEmpty ? false : true, default = false}"
+                    android:text="@string/done"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/view_divider"
+                    app:layout_constraintStart_toStartOf="@id/view_divider"
+                    app:layout_constraintTop_toBottomOf="@id/view_divider" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</layout>

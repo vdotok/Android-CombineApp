@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".feature.dashboard.fragment.GroupListingFragment">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="isGroupListEmpty"
+            type="Boolean" />
+
+        <variable
+            name="isActiveSession"
+            type="androidx.databinding.ObservableBoolean" />
+
+        <variable
+            name="showIcon"
+            type="Boolean" />
+
+        <variable
+            name="showBackIcon"
+            type="Boolean" />
+
+        <variable
+            name="showCheckIcon"
+            type="Boolean" />
+
+        <variable
+            name="toolbarTitle"
+            type="String" />
+
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <include
+        android:id="@+id/customToolbar"
+        layout="@layout/custom_toolbar"
+        bind:showBackIcon="@{showBackIcon}"
+        bind:isActiveSession="@{isActiveSession}"
+        bind:showIcon="@{showIcon}"
+        bind:showCheckIcon="@{showCheckIcon}"
+        bind:toolbarTitle="@{toolbarTitle}" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgOnBoarding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:src="@drawable/ic_on_boarding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customToolbar" />
+
+    <TextView
+        android:id="@+id/tv_no_conversation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="63dp"
+        android:fontFamily="@font/inter_regular_400"
+        android:text="@string/no_conversation_yet"
+        android:textColor="@color/tile_green_dark"
+        android:textSize="21sp"
+        app:layout_constraintEnd_toEndOf="@+id/imgOnBoarding"
+        app:layout_constraintStart_toStartOf="@+id/imgOnBoarding"
+        app:layout_constraintTop_toBottomOf="@+id/imgOnBoarding" />
+
+    <TextView
+        android:id="@+id/tv_no_conversion_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inter_regular_400"
+        android:gravity="center"
+        android:text="@string/no_conversation_detail"
+        android:textColor="@color/lightest_indigo"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_no_conversation"
+        app:layout_constraintStart_toStartOf="@+id/tv_no_conversation"
+        app:layout_constraintTop_toBottomOf="@+id/tv_no_conversation" />
+
+    <Button
+        android:id="@+id/btn_new_chat"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_button_purple_stroke"
+        android:fontFamily="@font/manrope_bold_700"
+        android:text="@string/new_chat"
+        android:textAllCaps="true"
+        android:textColor="@color/indigo"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_no_conversion_details"
+        app:layout_constraintStart_toStartOf="@+id/tv_no_conversion_details"
+        app:layout_constraintTop_toBottomOf="@+id/tv_no_conversion_details" />
+
+    <Button
+        android:id="@+id/btn_refresh"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/ripple_effect_button_active"
+        android:backgroundTint="@color/indigo"
+        android:fontFamily="@font/manrope_bold_700"
+        android:text="@string/refresh"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_no_conversation"
+        app:layout_constraintStart_toStartOf="@+id/tv_no_conversation"
+        app:layout_constraintTop_toBottomOf="@+id/btn_new_chat" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/noGroupsExistGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="@{isGroupListEmpty? View.VISIBLE : View.GONE, default = visible}"
+        app:constraint_referenced_ids="imgOnBoarding, tv_no_conversation, tv_no_conversion_details, btn_new_chat, btn_refresh" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/customToolbar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvGroupList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="40dp"
+            tools:listitem="@layout/item_group_row"
+            tools:itemCount="5"
+            android:visibility="@{isGroupListEmpty? View.GONE : View.VISIBLE, default = gone}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/groupListToolbar" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addGroup"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        app:borderWidth="0dp"
+        android:backgroundTint="@color/tile_green_dark"
+        android:elevation="20dp"
+        android:background="@drawable/ripple_effect_button_active"
+        android:src="@drawable/person_add"
+        android:contentDescription="@string/checkmark_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

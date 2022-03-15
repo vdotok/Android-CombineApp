@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+        <import type="com.vdotok.streaming.enums.MediaType"/>
+        <import type="com.vdotok.streaming.enums.SessionType"/>
+
+        <variable
+            name="name"
+            type="String" />
+
+        <variable
+            name="dp"
+            type="String" />
+
+        <variable
+            name="imageAvailable"
+            type="Boolean" />
+
+        <variable
+            name="model"
+            type="com.vdotok.app.models.CallHistoryData" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/groupView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <include
+            android:id="@+id/img_user"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            layout="@layout/profile_dp"
+            bind:imageAvailable="@{imageAvailable}"
+            bind:dp="@{dp}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/manrope_medium_500"
+            android:textColor="@color/grayish_black"
+            android:textSize="18sp"
+            android:text="@{model.fullName}"
+            android:layout_marginStart="12dp"
+            app:layout_constraintStart_toEndOf="@+id/img_user"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/callStatus"
+            tools:text="Uzair Dawood" />
+
+        <TextView
+            android:id="@+id/callStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/manrope_medium_500"
+            android:textColor="@color/grey"
+            android:textSize="16sp"
+            android:text="@{model.callStatus}"
+            android:layout_marginStart="12dp"
+            app:layout_constraintStart_toEndOf="@+id/img_user"
+            app:layout_constraintTop_toBottomOf="@id/userName"
+            app:layout_constraintBottom_toTopOf="@+id/view_divider"
+            tools:text="Missed Call"
+            android:drawablePadding="6dp"
+            android:drawableStart="@{model.sessionType == SessionType.SCREEN ? @drawable/broadcast_icon_group : model.mediaType == MediaType.AUDIO ?@drawable/ic_call_icon :model.associateId.isEmpty()?@drawable/ic_video_call: @drawable/broadcast_icon_group}" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/manrope_medium_500"
+            android:textColor="@color/grayish_black"
+            android:textSize="18sp"
+            android:layout_margin="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/view_divider"
+            tools:text="4:37 pm " />
+        <View
+            android:id="@+id/view_divider"
+            android:layout_width="wrap_content"
+            android:layout_height="0.7dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/blueish_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/callStatus"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

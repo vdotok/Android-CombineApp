@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+        <variable
+            name="countParticipant"
+            type="androidx.databinding.ObservableInt" />
+        <variable
+            name="countView"
+            type="androidx.databinding.ObservableBoolean" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(countParticipant)}"
+            android:visibility="@{countView? View.VISIBLE : View.GONE}"
+            tools:text="15"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/tile_green_dark"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/userCount" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/userCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="8dp"
+            android:padding="6dp"
+            android:visibility="@{countView ? View.VISIBLE : View.GONE}"
+            android:src="@drawable/ic_count"
+            app:layout_constraintEnd_toStartOf="@id/count"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

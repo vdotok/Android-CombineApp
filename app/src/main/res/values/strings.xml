@@ -1,0 +1,181 @@
+<resources>
+    <string name="app_name">VdoTok</string>
+
+    <!--    login/signup fields hints-->
+    <string name="userNameHint">Username</string>
+    <string name="userEmailHint">Email Address</string>
+    <string name="usernameEmailHint">Username / Email</string>
+    <string name="passwordHint">Password</string>
+
+    <!--    login/signup field texts-->
+    <string name="signIn">Sign In</string>
+    <string name="signup">Sign Up</string>
+    <string name="sign_up_to_your_account">Sign Up to your account</string>
+
+    <!--    general Titles-->
+    <string name="logout">Logout</string>
+    <string name="chat">Chat</string>
+    <string name="call">Call</string>
+    <string name="audio_call">Audio Call</string>
+    <string name="video_call">Video Call</string>
+    <string name="calling">Calling</string>
+    <string name="audio">audio</string>
+    <string name="video">video</string>
+
+
+    <!--    login/signup fields error messages-->
+    <string name="invalid_email">Invalid Email Address</string>
+    <string name="invalid_username">Invalid Username Credential</string>
+    <string name="invalid_password">Invalid Password Credential</string>
+
+    <!--    Fragment Titles-->
+    <string name="loin_fragment">Login Fragment</string>
+    <string name="call_fragment">Call Fragment</string>
+    <string name="call_connected_fragment">Call Connected Fragment</string>
+    <string name="signup_fragment">Signup Fragment</string>
+    <string name="all_users_list_fragment">All Users List Fragment</string>
+    <string name="create_group_list_fragment">Create Group Users List Fragment</string>
+    <string name="chat_fragment">Chat Fragment</string>
+    <string name="group_list_fragment">Group List Fragment</string>
+
+    <!--    general error messages-->
+    <string name="no_network_available">No internet!</string>
+
+
+    <!-- Call Connected Screen Messages   -->
+    <string name="call_screen_title_message">You are in %s calling with</string>
+
+    <!--    imageview content description-->
+    <string name="back_arrow_description">Icon back arrow</string>
+    <string name="checkmark_description">Icon check mark</string>
+    <string name="chat_icon_description">Icon chat</string>
+    <string name="call_icon_description">Icon call</string>
+    <string name="video_call_icon_description">Icon video call</string>
+    <string name="user_avatar_description">Icon user avatar</string>
+
+    <!--    toolbar texts-->
+    <string name="title_new_chat">New Chat</string>
+    <string name="create_group_chat">Create Group Chat</string>
+    <string name="active_session_message">Tab to return to call</string>
+
+    <!--    all users activity -->
+    <string name="hint_search_bar">Search</string>
+    <string name="add_group_chat">Add Group Chat</string>
+    <string name="contacts">Contacts</string>
+    <string name="no_user_found">No User Found!</string>
+    <string name="no_user_select">No User Selected</string>
+    <string name="create_group_dialog_title">Create a group chat</string>
+    <string name="name_group_chat">Name your group chat</string>
+    <string name="group_name_hint">ex: Norgic Team</string>
+    <string name="done">Done</string>
+    <string name="group_name_empty">Group name cannot be empty!</string>
+    <string name="group_created">Group created success</string>
+
+    <!--    loading messages-->
+    <string name="loading_creating_group">Creating your group!</string>
+    <string name="loading_users_list">Loading user\'s list!</string>
+    <string name="loading_user_availability">Checking user availability!</string>
+    <string name="loading_sign_in">Signing you in please wait!</string>
+    <string name="loading_sign_up">Signing you up please wait!</string>
+    <string name="loading_groups">Loading Groups!</string>
+    <string name="loading_profile">Loading Profile!</string>
+    <string name="loading_update_group_name">Updating group name!</string>
+    <string name="loading_delete_group">Deleting Group!</string>
+
+    <!--    dashboard texts-->
+    <string name="title_chat_rooms">Chat Rooms</string>
+    <string name="un_read_messages">UnRead messages</string>
+    <string name="offline">Offline</string>
+    <string name="online">Online</string>
+    <string name="edit_group">Edit Group Name</string>
+    <string name="delete_group">Delete</string>
+    <string name="attachment">Attachment</string>
+    <string name="no_conversation_yet">No Conversation Yet</string>
+    <string name="no_conversation_detail">Tap and hold on any message\nto star it, so you can easily find it later.</string>
+    <string name="new_chat">New Chat</string>
+    <string name="refresh">Refresh</string>
+    <string name="add_group_title">Add Group Title</string>
+    <string name="delete_group_des">Are you sure you want to delete the chatroom?</string>
+    <string name="cancel">Cancel</string>
+    <string name="group_updated">Group updated!</string>
+    <string name="group_deleted">Group deleted!</string>
+
+    <!--    alert dialog messages-->
+    <string name="audio_permission_denied">Please provide audio permission to make an Audio Call!</string>
+    <string name="video_permission_denied">Please provide audio and camera permissions to make an Video Call!</string>
+    <string name="broadcast_permission_denied">Please provide audio and camera permissions to initiate a Broadcast!</string>
+    <string name="read_write_permission_denied">Please provide permissions to access external storage</string>
+    <string name="grant_permissions">Grant Permissions!</string>
+
+    <!--    chat texts-->
+    <string name="type_MessageHint">Type your message</string>
+    <string name="inProgress">In Progress!!</string>
+    <string name="video_file">Video File</string>
+    <string name="doc_file">Document File</string>
+    <string name="read">Read %s</string>
+    <string name="readOnly">Read</string>
+    <string name="attachment_failed">Attachment received failed</string>
+    <string name="audio_file">Audio File</string>
+    <string name="msg_storage_permission_denied">Permission to receive files was denied by user!</string>
+
+    <!--    dialog Attachment texts-->
+    <string name="add_attachment">Add Attachment</string>
+
+    <!--   ContentDescription of dialog -->
+    <string name="img_close">img_close</string>
+    <string name="file_option">file_option</string>
+    <string name="camera_option">camera_option</string>
+    <string name="album_option">album_option</string>
+    <string name="audio_option">audio_option</string>
+    <string name="location_option">location_option</string>
+    <string name="contact_option">contact_option</string>
+    <string name="img_caution">img_caution</string>
+
+
+    <!--   ContentDescription of BottomBar of chat -->
+    <string name="img_option_menu">img_optionMenu</string>
+    <string name="img_send_button">img_sendButton</string>
+    <string name="img_gallery">img_gallery</string>
+
+    <!--    permission dialog header-->
+    <string name="permission_dialog_header">Permission Alert!</string>
+    <string name="permission_dialog_content">File Received! Please provide storage permissions to download and view file!</string>
+
+    <!--    broadcast option selection-->
+    <string name="public_broadcast_options_header">Public Broadcast</string>
+    <string name="public_broadcast_url">Public URL</string>
+    <string name="copy_url">Copy URL</string>
+    <string name="group_broadcast_options_header">Group Broadcast</string>
+    <string name="toggle_enable_screen_share">Enable Screen Sharing</string>
+    <string name="toggle_audio_settings">Audio Settings</string>
+    <string name="toggle_enable_camera">Enable Camera</string>
+    <string name="app_audio_not_supported">App Audio is not supported!</string>
+    <string name="toggle_screen_share_disabled">Screen Sharing is Disabled!</string>
+    <string name="call_history">Call History</string>
+    <string name="profile">Profile</string>
+    <string name="optionmenu">optionMenu</string>
+
+    <!-- profile screen string -->
+    <string name="contact">Contact : %s</string>
+    <string name="title_activity_call_history">CallHistory</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="callHistory">Call History</string>
+
+    <!--    Call Statuses-->
+    <string name="status_outgoing_call">Outgoing Call</string>
+    <string name="status_incoming_call">Incoming Call</string>
+    <string name="status_missed_call">Missed Call</string>
+    <string name="status_rejected_call">Call Rejected</string>
+    <string name="connect">Connection Status</string>
+    <string name="status">Status</string>
+    <string name="chat_txt">CHAT :</string>
+    <string name="call_txt">CALL :</string>
+    <string name="selectType">Kindly Select Call Type..</string>
+</resources>

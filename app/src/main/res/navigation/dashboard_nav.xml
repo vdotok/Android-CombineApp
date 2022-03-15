@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/groupListingFragment">
+
+    <fragment
+        android:id="@+id/groupListingFragment"
+        android:name="com.vdotok.app.feature.dashboard.fragment.GroupListingFragment"
+        android:label="@string/group_list_fragment"
+        tools:layout="@layout/fragment_group_listing" >
+
+        <action
+            android:id="@+id/action_open_broadcastOptionsFragment"
+            app:destination="@id/broadcastOptionsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true" />
+
+    </fragment>
+
+    <dialog
+        android:id="@+id/broadcastOptionsFragment"
+        android:name="com.vdotok.app.feature.dashboard.dialog.BroadcastOptionsFragment"
+        android:label="broadcastOptionsFragment"
+        tools:layout="@layout/fragment_broadcast_options"/>
+
+</navigation>

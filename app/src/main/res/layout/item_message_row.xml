@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+        <import type="android.util.LayoutDirection" />
+        <import type="android.view.View"/>
+        <import type="com.vdotok.app.extensions.ViewExtension"/>
+        <import type="com.vdotok.connect.models.MessageType"/>
+
+        <variable
+            name="seenMsg"
+            type="Boolean" />
+
+        <variable
+            name="model"
+            type="com.vdotok.connect.models.Message"  />
+
+        <variable
+            name="sender"
+            type="Boolean"  />
+
+        <variable
+            name="sendStatus"
+            type="Boolean"  />
+
+        <variable
+            name="messageTypeText"
+            type="String" />
+
+        <variable
+            name="chatViewModel"
+            type="com.vdotok.app.feature.chat.viewmodel.ChatViewModel" />
+    </data>
+
+ <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layoutDirection="@{sender ? LayoutDirection.RTL: LayoutDirection.LTR}">
+
+    <TextView
+        android:id="@+id/senderName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Theme_Text_message"
+        android:visibility="@{sender ? View.GONE : View.VISIBLE}"
+        android:text="@{chatViewModel.getUserName(model)}"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/customMessageTypeText"
+        tools:text="Uzair"/>
+
+    <include
+        android:id="@+id/customMessageTypeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        bind:sender="@{sender}"
+        android:layout_marginStart="20dp"
+        android:visibility="@{model.type == MessageType.text ? View.VISIBLE : View.GONE,default = gone}"
+        layout="@layout/custom_text_message_view"
+        app:layout_constraintTop_toBottomOf="@id/senderName"
+        app:layout_constraintStart_toStartOf="parent"
+       />
+
+     <include
+         android:id="@+id/customImageTypeText"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="20dp"
+         android:visibility="@{(model.type == MessageType.media &amp;&amp; model.subType == 0 )? View.VISIBLE : View.GONE}"
+         bind:sendStatus="@{sendStatus}"
+         layout="@layout/custom_image_message_view"
+         app:layout_constraintTop_toBottomOf="@id/senderName"
+         app:layout_constraintStart_toStartOf="parent"
+        />
+
+     <include
+         android:id="@+id/customFileTypeText"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="20dp"
+         android:visibility="@{(model.type == MessageType.media &amp;&amp; model.subType != 0 )? View.VISIBLE : View.GONE,default = gone}"
+         layout="@layout/custom_file_message_view"
+         app:layout_constraintTop_toBottomOf="@id/senderName"
+         app:layout_constraintStart_toStartOf="parent"
+         />
+
+    <TextView
+        android:id="@+id/messageRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:gravity="end"
+        android:visibility="@{(seenMsg &amp;&amp; sender) ? View.VISIBLE : View.GONE}"
+        android:text="@{(chatViewModel.getGroupStatus() == true)? String.format(@string/readOnly):String.format(@string/read,model.readCount)}"
+        style="@style/Theme_Text_message"
+        app:layout_constraintBottom_toTopOf="@id/timeStatus"
+        app:layout_constraintStart_toStartOf="@+id/timeStatus"
+        app:layout_constraintEnd_toEndOf="@id/timeStatus"
+        tools:text="Read"/>
+
+    <TextView
+        android:id="@+id/timeStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_marginStart="14dp"
+        android:text="@{ViewExtension.INSTANCE.timeCheck(model.date)}"
+        style="@style/Theme_Text_message"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/barrierGroupBottom"
+        tools:text="9:00"
+        />
+
+     <androidx.constraintlayout.widget.Barrier
+         android:id="@+id/barrierGroupBottom"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         app:barrierDirection="end"
+         app:constraint_referenced_ids="customMessageTypeText,customImageTypeText,customFileTypeText"/>
+
+
+
+ </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

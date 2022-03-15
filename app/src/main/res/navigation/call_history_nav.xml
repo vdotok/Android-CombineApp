@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/callHistoryFragment">
+
+    <fragment
+        android:id="@+id/callHistoryFragment"
+        android:name="com.vdotok.app.feature.callHistory.fragment.CallHistoryFragment"
+        android:label="callHistoryFragment"
+        tools:layout="@layout/call_history_fragment" >
+    </fragment>
+
+
+</navigation>

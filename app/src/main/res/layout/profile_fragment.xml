@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+        <variable
+            name="user"
+            type="com.vdotok.network.models.LoginResponse" />
+
+        <variable
+            name="isActiveSession"
+            type="androidx.databinding.ObservableBoolean" />
+
+        <variable
+            name="showIcon"
+            type="Boolean" />
+
+        <variable
+            name="showBackIcon"
+            type="Boolean" />
+
+        <variable
+            name="showCheckIcon"
+            type="Boolean" />
+
+        <variable
+            name="toolbarTitle"
+            type="String" />
+
+        <variable
+            name="dp"
+            type="String" />
+
+        <variable
+            name="imageAvailable"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/theme_gradient">
+
+        <include
+            android:id="@+id/customToolbar"
+            layout="@layout/custom_toolbar"
+            bind:showBackIcon="@{showBackIcon}"
+            bind:isActiveSession="@{isActiveSession}"
+            bind:showIcon="@{showIcon}"
+            bind:showCheckIcon="@{showCheckIcon}"
+            bind:toolbarTitle="@{toolbarTitle}" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sample"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/customToolbar">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="50dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="1dp"
+                app:cardBackgroundColor="@color/greenish_light_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/userName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{user.fullName}"
+                        android:layout_gravity="center_horizontal"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/grayish_black"
+                        android:layout_marginTop="60dp"
+                        tools:text="stadium"/>
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{user.email}"
+                    android:layout_gravity="center_horizontal"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/grayish_black"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginBottom="10dp"
+                    tools:text="hill@gmail.com"/>
+
+                <TextView
+                    android:id="@+id/contact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.format(@string/contact, user.contact)}"
+                    android:layout_gravity="center_horizontal"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/grayish_black"
+                    android:layout_marginTop="140dp"
+                    tools:text="Contact : 78601"/>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <include
+                android:id="@+id/img_user"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                layout="@layout/profile_dp"
+                bind:imageAvailable="@{imageAvailable}"
+                bind:dp="@{dp}"
+                android:elevation="2dp"
+                app:layout_constraintBottom_toTopOf="@id/card"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/card"
+                />
+
+               <androidx.appcompat.widget.AppCompatImageView
+                   android:id="@+id/editProfile"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="16dp"
+                   android:layout_marginEnd="10dp"
+                   android:elevation="28dp"
+                   android:background="@drawable/change_img"
+                   app:layout_constraintEnd_toEndOf="@id/img_user"
+                   app:layout_constraintTop_toTopOf="@id/card"
+                   app:layout_constraintBottom_toBottomOf="@+id/img_user"
+                   />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/black"
+                android:elevation="4dp"
+                app:layout_constraintBottom_toTopOf="@id/card"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/card" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

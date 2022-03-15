@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="search"
+            type="androidx.databinding.ObservableField&lt;String&gt;" />
+
+        <variable
+            name="username"
+            type="String" />
+
+        <variable
+            name="isChatConnected"
+            type="androidx.databinding.ObservableBoolean" />
+
+        <variable
+            name="isCallConnected"
+            type="androidx.databinding.ObservableBoolean" />
+
+        <variable
+            name="isCallClientRegisterd"
+            type="androidx.databinding.ObservableBoolean" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        tools:context=".feature.account.AccountActivity">
+
+        <TextView
+            android:id="@+id/chat_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chat_txt"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/grayish_black"
+            app:layout_constraintBottom_toTopOf="@id/call_status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            />
+
+        <TextView
+            android:id="@+id/call_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/call_txt"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/grayish_black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            />
+        <ImageView
+        android:id="@+id/chat_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:contentDescription="@string/chat_icon_description"
+        android:layout_margin="10dp"
+        android:src="@{isChatConnected ? @drawable/ic_chat_icon : @drawable/ic_chat_disconnect}"
+        app:layout_constraintStart_toEndOf="@+id/chat_status"
+        app:layout_constraintTop_toTopOf="@id/chat_status"
+        app:layout_constraintBottom_toBottomOf="@id/chat_status"/>
+
+        <ImageView
+            android:id="@+id/call_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@string/chat_icon_description"
+            android:layout_margin="10dp"
+            android:src="@{isCallConnected?  @drawable/ic_call_icon :  @drawable/ic_call_disconnect }"
+            app:layout_constraintBottom_toBottomOf="@id/call_status"
+            app:layout_constraintStart_toEndOf="@+id/call_status"
+            app:layout_constraintTop_toTopOf="@id/call_status"/>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/dashboard_nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navGraph="@navigation/dashboard_nav" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

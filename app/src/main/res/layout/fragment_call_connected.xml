@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isCamEnable"
+            type="androidx.databinding.ObservableBoolean" />
+
+        <variable
+            name="isAppAudioEnable"
+            type="androidx.databinding.ObservableBoolean" />
+
+        <variable
+            name="isScreenEnable"
+            type="androidx.databinding.ObservableBoolean" />
+
+        <variable
+            name="isPublicURLAvailable"
+            type="androidx.databinding.ObservableBoolean" />
+
+        <variable
+            name="isMicEnable"
+            type="androidx.databinding.ObservableBoolean" />
+
+        <variable
+            name="isSpeakerEnable"
+            type="androidx.databinding.ObservableBoolean" />
+
+        <variable
+            name="countParticipant"
+            type="androidx.databinding.ObservableInt" />
+
+        <variable
+            name="isBroadCastReceiver"
+            type="Boolean" />
+
+        <variable
+            name="isScreenCasting"
+            type="Boolean" />
+
+        <variable
+            name="isCamCasting"
+            type="Boolean" />
+
+        <variable
+            name="isAppAudioIncluded"
+            type="Boolean" />
+
+        <variable
+            name="isAudioCall"
+            type="Boolean" />
+
+        <variable
+            name="callTitle"
+            type="String" />
+        <variable
+            name="countView"
+            type="androidx.databinding.ObservableBoolean" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@color/light_grey1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/light_grey1"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/arrow_back">
+
+            <LinearLayout
+                android:id="@+id/toolbar_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="vertical">
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvCallType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:layout_weight="1"
+                        android:alpha="0.7"
+                        android:text="@{String.format(@string/call_screen_title_message,isAudioCall?@string/audio:@string/video)}"
+                        android:textColor="@color/light_black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/timer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:alpha="0.7"
+                        android:gravity="end"
+                        android:textColor="@color/light_black"
+                        android:textSize="14sp"
+                        tools:text="05:00" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TextView
+                    android:id="@+id/tvUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_bold_700"
+                    android:text="@{callTitle}"
+                    android:textColor="@color/light_black"
+                    android:textSize="20sp"
+                    tools:text="almightyMango-almightyApple" />
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <LinearLayout
+            android:id="@+id/video_strip"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginTop="20dp"
+            android:animateLayoutChanges="true"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="5dp"
+            android:visibility="gone"
+            android:weightSum="4"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <com.vdotok.app.uielements.CustomCallView
+                android:id="@+id/video_strip_view1"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_weight="1"
+                android:tag="viewOne"
+                android:visibility="gone"
+                app:avatar="@drawable/screen_share"
+                app:borderStrokeColor="@color/light_grey1"
+                app:borderStrokeWidth="12"
+                app:showViewBorder="true" />
+
+            <Space
+                android:layout_width="3dp"
+                android:layout_height="match_parent" />
+
+
+            <com.vdotok.app.uielements.CustomCallView
+                android:id="@+id/video_strip_view2"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_weight="1"
+                android:tag="viewTwo"
+                android:visibility="gone"
+                app:avatar="@drawable/screen_share"
+                app:borderStrokeColor="@color/light_grey1"
+                app:borderStrokeWidth="12"
+                app:showViewBorder="true" />
+
+            <Space
+                android:layout_width="3dp"
+                android:layout_height="match_parent" />
+
+
+            <com.vdotok.app.uielements.CustomCallView
+                android:id="@+id/video_strip_view3"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_weight="1"
+                android:tag="viewThree"
+                android:visibility="gone"
+                app:avatar="@drawable/screen_share"
+                app:borderStrokeColor="@color/light_grey1"
+                app:borderStrokeWidth="12"
+                app:showViewBorder="true" />
+
+            <Space
+                android:layout_width="3dp"
+                android:layout_height="match_parent" />
+
+
+            <com.vdotok.app.uielements.CustomCallView
+                android:id="@+id/video_strip_view4"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_weight="1"
+                android:tag="viewFour"
+                android:visibility="gone"
+                app:avatar="@drawable/screen_share"
+                app:borderStrokeColor="@color/light_grey1"
+                app:borderStrokeWidth="12"
+                app:showViewBorder="true" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/invisibleStrip"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+
+        <ImageView
+            android:id="@+id/audioCallView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/blueish_white"
+            android:src="@{isScreenCasting?@drawable/ic_ss_icon_enabled:@drawable/ic_user_avatar}"
+            android:visibility="@{isCamCasting?View.GONE:isBroadCastReceiver?View.GONE:View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/invisibleStrip" />
+
+        <com.vdotok.app.uielements.CustomCallView
+            android:id="@+id/video_view_full"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/blueish_white"
+            android:tag="fullView"
+            android:visibility="@{isAudioCall?View.GONE:isCamCasting?View.VISIBLE:isBroadCastReceiver?View.VISIBLE:View.GONE}"
+            app:avatar="@drawable/screen_share"
+            app:borderStrokeColor="@color/light_grey1"
+            app:borderStrokeWidth="12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/invisibleStrip"
+            app:showViewBorder="true" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/camSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:elevation="10dp"
+                android:focusable="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_cam_switch"
+                android:visibility="@{isBroadCastReceiver?View.GONE:isCamCasting?View.VISIBLE:View.GONE}"
+                />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSpeaker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:elevation="10dp"
+                android:focusable="true"
+                android:padding="10dp"
+                android:src="@{isSpeakerEnable?@drawable/ic_speaker_on_off:@drawable/speaker_off}"
+                />
+
+            <include
+                android:id="@+id/countParticipants"
+                layout="@layout/custom_count_participant"
+                bind:countView="@{countView}"
+                bind:countParticipant="@{countParticipant}"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/copyURL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:elevation="10dp"
+                android:focusable="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_copy_url"
+                android:visibility="@{isPublicURLAvailable?View.VISIBLE:View.GONE}"
+                 />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/screenOnOff"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center_vertical"
+                android:src="@{isScreenEnable?@drawable/ic_ss_on:@drawable/ic_ss_off}"
+                android:visibility="@{isBroadCastReceiver?View.GONE:isScreenCasting?View.VISIBLE:View.GONE}" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:visibility="@{isBroadCastReceiver?View.GONE:isCamCasting?View.VISIBLE:View.GONE}" />
+
+            <!--            BoradCast Reciever = false Done-->
+            <!--            boradcast sender = on Done-->
+            <!--            screen share session = off-->
+            <!--            cam = on-->
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/camOnOff"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center_vertical"
+                android:src="@{isCamEnable?@drawable/ic_cam_on:@drawable/ic_cam_off}"
+                android:visibility="@{isBroadCastReceiver?View.GONE:isCamCasting?View.VISIBLE:View.GONE}" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/endCall"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_end_call" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:visibility="@{isBroadCastReceiver?View.GONE:isCamCasting?View.VISIBLE:isAudioCall?View.VISIBLE:!isAppAudioIncluded?View.VISIBLE:View.GONE}" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/mute"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center_vertical"
+                android:src="@{isMicEnable?@drawable/ic_mic_on:@drawable/ic_mic_off}"
+                android:visibility="@{isBroadCastReceiver?View.GONE:isCamCasting?View.VISIBLE:isAudioCall?View.VISIBLE:!isAppAudioIncluded?View.VISIBLE:View.GONE}" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:visibility="@{isBroadCastReceiver?View.GONE:isAppAudioIncluded?View.VISIBLE:View.GONE}" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/appAudioOnOff"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center_vertical"
+                android:src="@{isAppAudioEnable?@drawable/ic_app_audio_on:@drawable/ic_app_audio_off}"
+                android:visibility="@{isBroadCastReceiver?View.GONE:isAppAudioIncluded?View.VISIBLE:View.GONE}" />
+
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

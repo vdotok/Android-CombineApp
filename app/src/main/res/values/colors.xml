@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <color name="purple_200">#FFBB86FC</color>-->
+<!--    <color name="purple_500">#FF6200EE</color>-->
+<!--    <color name="purple_700">#FF3700B3</color>-->
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
+    <color name="red">#F76C6C</color>
+    <color name="dark_pink">#E9446A</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="off_white">#E5E5E5</color>
+    <color name="light_white">#F9F9F9</color>
+
+    <color name="theme_color">#F6EB75</color>
+<!--    <color name="dark_yellow">#F2E33A</color>-->
+
+    <color name="black">#FF000000</color>
+    <color name="grayish_black">#1F2021</color>
+    <color name="light_black">#151624</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="grey">#FF9D9D9D</color>
+    <color name="light_grey">#FFC2C2CC</color>
+    <color name="light_grey1">#F1F1F5</color>
+    <color name="dark_grey">#FF3B434D</color>
+    <color name="grayish_3">#8F9090</color>
+
+    <color name="green">#54C295</color>
+    <color name="opal">#A3C3BD</color>
+    <color name="parrot_green">#29B37B</color>
+    <color name="tile_green_dark">#659B91</color>
+    <color name="tile_green_light_2">#D1E1DE</color>
+    <color name="tile_green_2">#B2CDC8</color>
+    <color name="tile_green_light">#C1D7D3</color>
+    <color name="greenish_light_white">#F0F5F4</color>
+    <color name="light_blackish_green">#1E2F2C</color>
+
+    <color name="indigo">#190354</color>
+    <color name="lightest_indigo">#D1CDDD</color>
+    <color name="light_indigo">#A39ABB</color>
+    <color name="dark_indigo">#8C81AA</color>
+    <color name="dark_indigo_2">#020008</color>
+
+    <color name="navy_blue">#171725</color>
+    <color name="blueish_white">#D1D9E0</color>
+    <color name="sea_blue">#3D5D57</color>
+
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/allUsersListFragment">
+
+    <fragment
+        android:id="@+id/allUsersListFragment"
+        android:name="com.vdotok.app.feature.userlisting.fragment.AllUsersListFragment"
+        android:label="@string/all_users_list_fragment"
+        tools:layout="@layout/fragment_all_users_list">
+
+        <action
+            android:id="@+id/action_move_to_create_group_users_list"
+            app:destination="@id/createGroupUsersListFragment"
+            app:enterAnim="@anim/slide_item_from_right"
+            app:exitAnim="@anim/slide_item_to_left"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/slide_item_from_right"
+            app:popExitAnim="@anim/slide_item_to_left"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/createGroupUsersListFragment"
+        android:name="com.vdotok.app.feature.userlisting.fragment.CreateGroupChatFragment"
+        android:label="@string/create_group_list_fragment"
+        tools:layout="@layout/fragment_create_group_chat" />
+
+</navigation>

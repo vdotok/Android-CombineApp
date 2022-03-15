@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="surfaceView">
+        <attr name="avatar" format="reference" />
+        <attr name="borderStrokeColor" format="integer" />
+        <attr name="borderStrokeWidth" format="integer" />
+        <attr name="avatarUsername" format="string" />
+        <attr name="showViewBorder" format="boolean" />
+    </declare-styleable>
+</resources>

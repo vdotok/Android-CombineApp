@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+   >
+    <item
+        app:showAsAction="ifRoom"
+        android:id="@+id/profileOption"
+        android:icon="@drawable/profile"
+        android:title="@string/profile"/>
+
+    <item
+        app:showAsAction="ifRoom"
+        android:id="@+id/callHistoryOption"
+        android:icon="@drawable/call_history"
+        android:title="@string/call_history"/>
+
+    <item
+        app:showAsAction="ifRoom"
+        android:id="@+id/logoutOption"
+        android:icon="@drawable/log_out"
+        android:title="@string/logout"/>
+
+</menu>

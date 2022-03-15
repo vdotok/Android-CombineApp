@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.vdotok.app.feature.account.fragment.LoginFragment"
+        android:label="@string/loin_fragment"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/action_move_to_signup_user"
+            app:destination="@id/signupFragment"
+            app:enterAnim="@anim/slide_item_from_right"
+            app:exitAnim="@anim/slide_item_to_left"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/slide_item_from_right"
+            app:popExitAnim="@anim/slide_item_to_left"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.vdotok.app.feature.account.fragment.SignupFragment"
+        android:label="@string/signup_fragment"
+        tools:layout="@layout/fragment_signup" />
+
+</navigation>

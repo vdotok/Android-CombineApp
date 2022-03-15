@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="screenSharingApp"
+            type="Boolean" />
+        <variable
+            name="screenSharingMic"
+            type="Boolean" />
+        <variable
+            name="cameraCall"
+            type="Boolean" />
+        <variable
+            name="optionSelected"
+            type="Boolean" />
+        <variable
+            name="isGroupBroadcast"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imgCloseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_close"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvHeader"
+            style="@style/Theme_TextView_Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:textSize="16sp"
+            android:text="@{isGroupBroadcast? @string/group_broadcast_options_header : @string/public_broadcast_options_header, default = @string/public_broadcast_options_header}"
+            app:layout_constraintBottom_toBottomOf="@+id/imgCloseButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imgCloseButton" />
+
+        <TextView
+            android:id="@+id/tvToggleScreenShare"
+            style="@style/Theme_TextView_Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/toggle_enable_screen_share"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/switchEnableScreenShare"
+            app:layout_constraintStart_toStartOf="@+id/tvHeader"
+            app:layout_constraintTop_toTopOf="@+id/switchEnableScreenShare" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchEnableScreenShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:checked="false"
+            android:thumb="@drawable/drawable_toggle_enable_screen_share"
+            app:layout_constraintEnd_toEndOf="@+id/imgCloseButton"
+            app:layout_constraintTop_toBottomOf="@+id/imgCloseButton"
+            app:showText="false"
+            app:track="@drawable/drawable_audio_setting_toggle_track" />
+
+        <TextView
+            android:id="@+id/tvMicAppAudioSelector"
+            style="@style/Theme_TextView_Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/toggle_audio_settings"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/switchAudioSettings"
+            app:layout_constraintStart_toStartOf="@+id/tvToggleScreenShare"
+            app:layout_constraintTop_toTopOf="@+id/switchAudioSettings" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchAudioSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:checked="false"
+            android:thumb="@drawable/drawable_toggle_audio_settings"
+            app:layout_constraintEnd_toEndOf="@+id/imgCloseButton"
+            app:layout_constraintTop_toBottomOf="@+id/switchEnableScreenShare"
+            app:showText="false"
+            app:track="@drawable/drawable_audio_setting_toggle_track" />
+
+        <TextView
+            android:id="@+id/tvEnableCamera"
+            style="@style/Theme_TextView_Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/toggle_enable_camera"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/switchEnableCamera"
+            app:layout_constraintStart_toStartOf="@+id/tvMicAppAudioSelector"
+            app:layout_constraintTop_toTopOf="@+id/switchEnableCamera" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchEnableCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:checked="false"
+            android:thumb="@drawable/drawable_toggle_enable_camera"
+            app:layout_constraintEnd_toEndOf="@+id/switchAudioSettings"
+            app:layout_constraintTop_toBottomOf="@+id/switchAudioSettings"
+            app:showText="false"
+            app:track="@drawable/drawable_audio_setting_toggle_track" />
+
+        <Button
+            android:id="@+id/btn_done"
+            style="@style/Theme_Button_Activated"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            android:text="@string/done"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switchEnableCamera" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
