@@ -44,6 +44,14 @@ Bravo! You’ve successfully configured the project in Android Studio.
 <li> After this, click on gradle sync icon from the toolbar
 <img width="21" alt="Screenshot 2021-12-02 at 4 43 51 PM" src="https://user-images.githubusercontent.com/88875529/144415902-78883f01-f5be-4f99-a6e3-d9ea44a71936.png"> to sync project.</li></br>
 
+<b>Note:</b>
+* In case of gradle sync failed with this error: 
+<img width="983" alt="Screenshot 2022-03-16 at 11 36 04 AM" src="https://user-images.githubusercontent.com/88875529/158531737-0387f61c-7ce4-454c-a766-a103b670c776.png">
+* Goto <b>"build.gradle (project level)"</b> and update "build tools version" to <b>"7.0.0"</b> or later and sync project again.
+
+<img width="1739" alt="Screenshot 2022-03-16 at 11 48 54 AM" src="https://user-images.githubusercontent.com/88875529/158532708-d9d822b4-1555-4bc8-9d26-bdebaba2f9f9.png">
+
+
 <b>Project Signup:</b>
 * Register "Server" at [VdoTok](https://console.vdotok.com) and get the <b>Project ID</b> and <b>API Service URL</b>
 * From file explorer, double-click on <b>vdotok -> app -> src -> main -> java -> com -> vdotok -> app -> utils -> ApplicationConstants</b> replace <b>SDK_PROJECT_ID</b> with your own <b>Project Id</b>
