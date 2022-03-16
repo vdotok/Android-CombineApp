@@ -22,7 +22,7 @@ IDE Installation & Build Guide
 * Click on <b>Get from Version Control</b> or in case the welcome page doesn't open, go to <b>File Menu->New</b> and select <b>Project From Version Control</b>
 * Select <b>Repository URL</b> from left menu
 * Select <b>Git</b> from <b>Version control</b> dropdown menu
-* Paste this URL <b>https://github.com/vdotok/Android-CombineApp</b> in URL section
+* Paste this URL https://github.com/vdotok/Android-CombineApp in URL section
 * Click on <b>Clone</b> button and wait for build.gradle file. You can see the progress at the bottom of <b>Android Studio</b>
 * Let the <b>Android Studio</b> install the components
 
