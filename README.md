@@ -7,14 +7,13 @@ Git Installation
 IDE Installation & Build Guide
 ==============================
 <b>Requirements:</b>
-* Android Studio 4.1.2 or later (Stable Version)
+* Android Studio Arctic Fox | 2020.3.1 or later (Stable Version)
 * [Click here](https://developer.android.com/studio?gclid=Cj0KCQjwhr2FBhDbARIsACjwLo2fEHdB3l3eqRlhIvySYNx1-3XjDmuX1eSCbaCI7zU8FKHFkGBcVyMaAtSjEALw_wcB&gclsrc=aw.ds#downloads) to download and install Android Studio
 * Android SDKs 21(Lollipop) or later
   * For downloading Android SDKs
   * Open Android Studio
   * While on the welcome page, Open <b>SDK Manager</b>
-  * On Android Studio 4.1 or onward, click on configure <img width="100" alt="Screenshot 2021-09-21 at 12 40 27 PM" src="https://user-images.githubusercontent.com/86282129/134131257-af72db7c-912d-47f3-9758-4de0479db9ca.png"> from the right bottom and select <b>SDK Manager</b>
-  * For Android Studio 4.2 or onward, click on three dots <img width="19" alt="Screenshot 2021-09-21 at 12 35 14 PM" src="https://user-images.githubusercontent.com/86282129/134130491-4f77bf35-a845-4a07-b577-bb4f7df1195a.png"> from the top right corner and select <b>SDK Manager</b>
+  * For Android Studio Arctic Fox | 2020.3.1 or onward, click on three dots <img width="19" alt="Screenshot 2021-09-21 at 12 35 14 PM" src="https://user-images.githubusercontent.com/86282129/134130491-4f77bf35-a845-4a07-b577-bb4f7df1195a.png"> from the top right corner and select <b>SDK Manager</b>
   * In case the welcome page doesn't open, go to file menu <b>Tools -> SDK Manager</b>
   * Click all checkboxes from <b>API Level 21 and onward</b>
   * Click <b>Apply</b> and download relevant packages
@@ -43,14 +42,6 @@ Bravo! You’ve successfully configured the project in Android Studio.
 
 <li> After this, click on gradle sync icon from the toolbar
 <img width="21" alt="Screenshot 2021-12-02 at 4 43 51 PM" src="https://user-images.githubusercontent.com/88875529/144415902-78883f01-f5be-4f99-a6e3-d9ea44a71936.png"> to sync project.</li></br>
-
-<b>Note:</b>
-* In case of gradle sync failed with this error: 
-<img width="983" alt="Screenshot 2022-03-16 at 11 36 04 AM" src="https://user-images.githubusercontent.com/88875529/158531737-0387f61c-7ce4-454c-a766-a103b670c776.png">
-* Goto <b>"build.gradle (project level)"</b> and update "build tools version" to <b>"7.0.0"</b> or later and sync project again.
-
-<img width="1739" alt="Screenshot 2022-03-16 at 11 48 54 AM" src="https://user-images.githubusercontent.com/88875529/158532708-d9d822b4-1555-4bc8-9d26-bdebaba2f9f9.png">
-
 
 <b>Project Signup:</b>
 * Register "Server" at [VdoTok](https://console.vdotok.com) and get the <b>Project ID</b> and <b>API Service URL</b>
