@@ -12,14 +12,12 @@ import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
 import com.vdotok.app.base.UserPreferences
-import com.vdotok.app.constants.SDK_PROJECT_ID
 import com.vdotok.app.interfaces.CallBackManager
 import com.vdotok.app.models.ActiveSession
 import com.vdotok.app.models.CallHistoryDetails
 import com.vdotok.app.services.ProjectionService
+import com.vdotok.app.utils.SDK_PROJECT_ID
 import com.vdotok.connect.manager.ChatManager
 import com.vdotok.connect.manager.ChatManagerCallback
 import com.vdotok.connect.models.*
@@ -91,11 +89,6 @@ class AppManager(val context: Context) {
     var userPresenceList: ArrayList<Presence> = ArrayList()
 
     var isCallSDKsReconnect = false
-
-    private val database = FirebaseDatabase.getInstance()
-    private val storage = FirebaseStorage.getInstance()
-    var ref = database.getReference("profile")
-    var storageRef = storage.reference
 
     /**
      * Defines callbacks for service binding, passed to bindService()
