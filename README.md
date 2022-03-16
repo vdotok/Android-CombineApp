@@ -11,9 +11,9 @@ IDE Installation & Build Guide
 * [Click here](https://developer.android.com/studio?gclid=Cj0KCQjwhr2FBhDbARIsACjwLo2fEHdB3l3eqRlhIvySYNx1-3XjDmuX1eSCbaCI7zU8FKHFkGBcVyMaAtSjEALw_wcB&gclsrc=aw.ds#downloads) to download and install Android Studio
 * Android SDKs 21(Lollipop) or later
   * For downloading Android SDKs, open <b>Android Studio</b>
-  * While on the welcome page, go to <b>SDK Manager</b>
+  * While on the Welcome page, go to <b>SDK Manager</b>
   * For Android Studio Arctic Fox | 2020.3.1 or onward, click on three dots <img width="19" alt="Screenshot 2021-09-21 at 12 35 14 PM" src="https://user-images.githubusercontent.com/86282129/134130491-4f77bf35-a845-4a07-b577-bb4f7df1195a.png"> from the top right corner and select <b>SDK Manager</b>
-  * In case the welcome page doesn't open, go to file menu <b>Tools -> SDK Manager</b>
+  * In case the Welcome page doesn't open, go to file menu <b>Tools -> SDK Manager</b>
   * Click all checkboxes from <b>API Level 21 and onward</b>
   * Click <b>Apply</b> and download relevant packages
 
@@ -35,7 +35,7 @@ Bravo! You’ve successfully configured the project in Android Studio.
 * In <b> Android Studio File Explorer</b>, select <b>Project</b>
 <img width="498" alt="123636395-41e08980-d836-11eb-8643-429d6e5510d5" src="https://user-images.githubusercontent.com/86282129/123811571-cb628b00-d90c-11eb-9584-b5a8f12957dc.png">
 
-* Go to <b>VdoTok-Call -> App -> libs</b>
+* Go to <b>VdoTok -> App -> libs</b>
 * Add the downloaded <b>streamingSDK.aar</b> and <b>connect.aar</b> files in the libs folder
 <img width="463" alt="Screenshot 2022-03-15 at 4 45 22 PM" src="https://user-images.githubusercontent.com/91589156/158371707-79ee2a8c-d8ed-4823-9d23-9802eb10e3eb.png">
 
