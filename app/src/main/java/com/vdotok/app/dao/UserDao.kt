@@ -28,4 +28,8 @@ interface UserDao {
     @Delete
     suspend fun deleteUserModel(userModel: UserModel)
 
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    @Query("SELECT * FROM Users Where refId = :Refid")
+    suspend fun getUserNameFromRefId(Refid: String): UserModel
 }

@@ -2,6 +2,7 @@ package com.vdotok.app.feature.call.viewmodel
 
 import androidx.databinding.ObservableBoolean
 import com.vdotok.app.base.BaseViewModel
+import com.vdotok.network.models.UserModel
 import com.vdotok.streaming.enums.MediaType
 import com.vdotok.streaming.enums.SessionType
 import com.vdotok.streaming.models.CallParams
@@ -169,4 +170,7 @@ class CallViewModel @Inject constructor() : BaseViewModel() {
         }
     }
 
+    suspend fun getNameFromRefID(refID: String): UserModel {
+        return userDao.getUserNameFromRefId(refID)
+    }
 }

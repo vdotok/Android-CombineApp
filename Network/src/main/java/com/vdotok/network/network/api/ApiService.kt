@@ -41,6 +41,6 @@ interface APIService {
     suspend fun authSDK(@Body model: AuthenticationRequest): Response<AuthenticationResponse>
 
     @Multipart
-    @POST("upload/")
+    @POST("/s3upload/")
     suspend fun uploadImage(@Part file: MultipartBody.Part?, @Part("type") type: RequestBody, @Part("auth_token") auth_token: RequestBody): ProfileImageResponse
 }

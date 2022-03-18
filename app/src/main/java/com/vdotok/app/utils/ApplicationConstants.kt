@@ -6,7 +6,6 @@ package com.vdotok.app.utils
  * Date & Time: On 17/11/2021 At 12:36 PM in 2021
  */
 
-//    SDK AUTH PARAMS
 const val SDK_PROJECT_ID = "Enter Project ID here"
 
 
