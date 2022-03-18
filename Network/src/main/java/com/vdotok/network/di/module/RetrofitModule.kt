@@ -3,7 +3,7 @@ package com.vdotok.network.di.module
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.vdotok.network.network.api.ApiService
+import com.vdotok.network.network.api.APIService
 import com.vdotok.network.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -57,13 +57,13 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): APIService {
+        return retrofit.create(APIService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideRetrofitService(): ApiService {
+    fun provideRetrofitService(): APIService {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -78,7 +78,7 @@ object RetrofitModule {
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
-            .create(ApiService::class.java)
+            .create(APIService::class.java)
     }
 
 

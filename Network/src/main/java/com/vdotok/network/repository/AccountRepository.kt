@@ -5,15 +5,15 @@ import com.vdotok.network.models.LoginResponse
 import com.vdotok.network.models.LoginUserModel
 import com.vdotok.network.models.SignUpModel
 import com.vdotok.network.network.Result
-import com.vdotok.network.network.api.ApiService
+import com.vdotok.network.network.api.APIService
 import com.vdotok.network.network.safeApiCall
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 class AccountRepository @Inject constructor(
-        private val apiService: ApiService,
-        private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val apiService: APIService,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
     suspend fun login(model: LoginUserModel): Result<LoginResponse> {

@@ -13,6 +13,8 @@ import com.vdotok.connect.models.HeaderModel
 import com.vdotok.connect.models.Message
 import com.vdotok.network.models.LoginResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -110,7 +112,7 @@ class ChatViewModel @Inject constructor(
 
 //    DAO Methods
     fun insertChatModel(message: Message, groupId: Int, fileUri: String) {
-        viewModelScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             chatDao.insertChat(message.toChatModel(groupId, fileUri))
         }
     }

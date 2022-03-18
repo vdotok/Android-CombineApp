@@ -533,11 +533,11 @@ class AppManager(val context: Context) {
 
     }
 
-    fun reconnectCallSDKs() {
+    fun reconnectCallSDKs(checkSessionsExist: Boolean) {
         val loginData = UserPreferences.userData as LoginResponse
         loginData.mediaServer?.let { mediaServerMap ->
             callClient?.connect(getMediaServerAddress(mediaServerMap), mediaServerMap.endPoint)
-            isCallSDKsReconnect = true
+            if (checkSessionsExist) isCallSDKsReconnect = true
         }
     }
 
