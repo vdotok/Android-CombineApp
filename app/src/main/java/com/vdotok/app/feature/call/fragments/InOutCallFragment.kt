@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.vdotok.app.R
 import com.vdotok.app.base.BaseFragment
@@ -22,6 +24,7 @@ import com.vdotok.streaming.enums.CallStatus
 import com.vdotok.streaming.enums.MediaType
 import com.vdotok.streaming.enums.SessionType
 import com.vdotok.streaming.models.CallParams
+import kotlinx.coroutines.launch
 import org.webrtc.VideoTrack
 
 class InOutCallFragment : BaseFragment<FragmentCallBinding, CallViewModel>() {
@@ -133,11 +136,27 @@ class InOutCallFragment : BaseFragment<FragmentCallBinding, CallViewModel>() {
         Log.e("CallStatus", "InOutCallFragment" + callInfoResponse.callStatus.value)
         when (callInfoResponse.callStatus) {
             CallStatus.CALL_REJECTED -> {
-                callInfoResponse.callParams?.let { callParams ->
-                    viewModel.updateCallHistory(callParams.sessionUUID, getString(R.string.status_rejected_call))
-                }
-                callInfoResponse.callParams?.sessionType?.let {
-                    updateMessageAndFinishActivity("Call Rejected by User")
+                if (isInitiator) {
+                    callInfoResponse.callParams?.let { callParams ->
+                        viewModel.appManager.activeSession[callParams.sessionType]?.apply {
+                            if (toRefIds.size > 1)
+                                viewModel.viewModelScope.launch {
+                                    val abc = viewModel.getNameFromRefID(callParams.refId)
+                                    Toast.makeText(
+                                        requireActivity(),
+                                        abc.fullName,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
+                        } ?: kotlin.run {
+                            updateMessageAndFinishActivity("Call Rejected by User")
+                            viewModel.updateCallHistory(
+                                callParams.sessionUUID,
+                                getString(R.string.status_rejected_call)
+                            )
+                        }
+                    }
                 }
             }
             CallStatus.CALL_CONNECTED -> {

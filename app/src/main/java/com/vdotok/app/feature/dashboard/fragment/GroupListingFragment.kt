@@ -482,8 +482,8 @@ override fun onFileReceivedCompleted(
     msgId: String
 ) {
     super.onFileReceivedCompleted(headerModel, byteArray, msgId)
-    checkForStoragePermissions(msgId, headerModel, byteArray)
     viewModel.groupModel = groupDataList.find { it.channelName == headerModel.topic }!!
+    checkForStoragePermissions(msgId, headerModel, byteArray,viewModel.groupModel)
     chatUtils.checkAndroidVersionToSave(headerModel, byteArray) {
         chatUtils.sendAttachmentMessage(
             this::onNewMessage,
@@ -498,7 +498,8 @@ override fun onFileReceivedCompleted(
 private fun checkForStoragePermissions(
     msgId: String,
     headerModel: HeaderModel,
-    byteArray: ByteArray
+    byteArray: ByteArray,
+    groupModel: GroupModel
 ) {
     if (ContextCompat.checkSelfPermission(
             requireContext(),
@@ -510,26 +511,31 @@ private fun checkForStoragePermissions(
     ) {
         storagePermissionDialog =
             StoragePermissionDialog(
-                { this.saveFile(msgId, headerModel, byteArray) },
+                { this.saveFile(msgId, headerModel, byteArray, groupModel) },
                 { this.sendTextMessage(getString(R.string.msg_storage_permission_denied)) },
             )
         activity?.supportFragmentManager?.let { it1 ->
             storagePermissionDialog?.show(it1, StoragePermissionDialog.TAG)
         }
     } else {
-        saveFile(msgId, headerModel, byteArray)
+        saveFile(msgId, headerModel, byteArray,groupModel)
     }
 
 }
 
-private fun saveFile(msgId: String, headerModel: HeaderModel, byteArray: ByteArray) {
+private fun saveFile(
+    msgId: String,
+    headerModel: HeaderModel,
+    byteArray: ByteArray,
+    groupModel: GroupModel
+) {
     chatUtils.checkAndroidVersionToSave(headerModel, byteArray) {
         chatUtils.sendAttachmentMessage(
             this::onNewMessage,
             headerModel,
             chatUtils.file,
             msgId,
-            viewModel.groupModel
+            groupModel
         )
     }
 }
