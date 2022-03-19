@@ -10,12 +10,12 @@ interface UserDao {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUsers(userModel: UserModel)
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUsers(userModelList: ArrayList<UserModel>)
 
     @Suppress("RedundantSuspendModifier")
