@@ -61,11 +61,10 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding, ProfileViewModel>()
         binding.user = userData
         if (!userData?.profile_pic.isNullOrEmpty()){
             binding.imageAvailable = true
-            val imageUri = image_uri + userData?.profile_pic
             activity?.runOnUiThread {
                 context?.let {
                     binding.imageAvailable = true
-                    Glide.with(it).load(imageUri)
+                    Glide.with(it).load(userData?.profile_pic)
                         .circleCrop()
                         .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .into(binding.imgUser.profileImage)

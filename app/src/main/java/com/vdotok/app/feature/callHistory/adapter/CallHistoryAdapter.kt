@@ -38,9 +38,8 @@ class CallHistoryAdapter(var context: Context,
             } else {
                 if (callLog.groupAutoCreatedValue.equals("1")) {
                     holder.binding?.imageAvailable = true
-                    val imageUri = image_uri + callLog.profilePic
                     holder.binding?.imgUser?.profileImage?.let {
-                        Glide.with(context).load(imageUri)
+                        Glide.with(context).load(callLog.profilePic)
                             .circleCrop()
                             .diskCacheStrategy(DiskCacheStrategy.DATA)
                             .into(it)

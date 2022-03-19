@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vdotok.app.R
 import com.vdotok.app.utils.MAX_PARTICIPANTS
-import com.vdotok.app.utils.image_uri
 import com.vdotok.app.databinding.ItemAllUsersListWithActionsBinding
 import com.vdotok.app.extensions.ViewExtension.showSnackBar
 import com.vdotok.app.feature.userlisting.interfaces.OnContactItemClickInterface
@@ -64,9 +63,8 @@ class SelectUserContactAdapter(var context: Context,
             holder.binding?.dp = setInitials(listData.fullName)
         }else {
             holder.binding?.imageAvailable = true
-            val imageUri = image_uri + listData.profilePic
                 holder.binding?.groupInitial?.profileImage?.let { it1 ->
-                    Glide.with(context).load(imageUri)
+                    Glide.with(context).load(listData.profilePic)
                         .circleCrop()
                         .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .into(it1)
@@ -74,16 +72,7 @@ class SelectUserContactAdapter(var context: Context,
         }
     }
     private fun setInitials(fullName: String?): String? {
-            val name :String? = if (fullName?.contains("-") == true){
-                val initials = fullName
-                    .split("-")
-                    .mapNotNull { it.firstOrNull()?.toString() }
-                    .reduce { acc, s -> acc + s }
-                initials
-            }else{
-                fullName?.substring(0, 2)
-            }
-            return name
+        return fullName?.substring(0, 1)
     }
 
     private fun setCreateGroupUserListing(
