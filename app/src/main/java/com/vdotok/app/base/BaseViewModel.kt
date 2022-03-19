@@ -242,7 +242,11 @@ BaseViewModel @Inject constructor() : ViewModel() {
         val title = if (isInitiator){
             callTitle
         } else{
-            data?.calleName
+            if (callParams?.callType == CallType.ONE_TO_ONE) {
+                data?.calleName
+            }else{
+              data?.groupName
+            }
         }
 
         viewModelScope.launch {
@@ -285,7 +289,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
             isInitiator = true,
             isAppAudio = isAppAudioIncluded,
             isBroadcast = isGroupBroadcast,
-            customDataPacket = Utils.setCallTitleCustomObject(callTitle,autoCreated)
+            customDataPacket = Utils.setCallTitleCustomObject(null,callTitle,autoCreated)
         )
     }
 
@@ -306,7 +310,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
             isAppAudio = isAppAudioIncluded,
             isBroadcast = isGroupBroadcast,
             isInitiator = true,
-            customDataPacket = Utils.setCallTitleCustomObject(callTitle,autoCreated)
+            customDataPacket = Utils.setCallTitleCustomObject(null,callTitle,autoCreated)
         )
     }
 

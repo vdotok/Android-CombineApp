@@ -16,7 +16,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vdotok.app.R
 import com.vdotok.app.base.BaseFragment
 import com.vdotok.app.base.UserPreferences
-import com.vdotok.app.utils.image_uri
 import com.vdotok.app.utils.type
 import com.vdotok.app.databinding.ProfileFragmentBinding
 import com.vdotok.app.extensions.ViewExtension.hide

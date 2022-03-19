@@ -24,7 +24,6 @@ const val AUDIO_DIRECTORY = "/cPass/audios"
 const val DOCS_DIRECTORY = "/cPass/docs"
 const val CACHE_DIRECTORY_NAME = "cacheFiles"
 const val directoryName: String = "Vdotok-chat"
-const val  image_uri = "https://tenant-api.vdotok.dev/files/"
 val docMimeType = arrayOf("application/msword",
 "application/vnd.openxmlformats-officedocument.wordprocessingml.document",  // .doc & .docx
 "application/vnd.ms-powerpoint",

@@ -250,8 +250,13 @@ class ConnectedCallFragment : BaseFragment<FragmentCallConnectedBinding, CallVie
                 isScreenCasting = true
                 isAppAudioIncluded = value.isAppAudio
             }
+
             val title = getCallTitle(value.customDataPacket.toString())
-            binding.callTitle = title?.calleName.toString()
+            if (value.callType == CallType.ONE_TO_ONE) {
+                binding.callTitle = title?.calleName.toString()
+            }else{
+                binding.callTitle = title?.groupName.toString()
+            }
 
 
         }

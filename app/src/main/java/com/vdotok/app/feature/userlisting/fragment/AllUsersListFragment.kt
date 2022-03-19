@@ -193,13 +193,13 @@ class AllUsersListFragment : BaseFragment<FragmentAllUsersListBinding, AllUsersV
             mediaType = mediaType,
             callType = CallType.ONE_TO_ONE,
             sessionType = SessionType.CALL,
-            customDataPacket = setCallTitleCustomObject(viewModel.getOwnUsername(),"1")
+            customDataPacket = setCallTitleCustomObject(viewModel.getOwnUsername(),null,"1")
         )
         val session = viewModel.appManager.getCallClient()?.dialOne2OneCall(callParams)
         session?.let { it1 ->
             val tempCallParams = callParams.copy()
             tempCallParams.sessionUUID = it1
-            tempCallParams.customDataPacket = setCallTitleCustomObject(callTitle,"1")
+            tempCallParams.customDataPacket = setCallTitleCustomObject(callTitle,null,"1")
             viewModel.appManager.setSession(SessionType.CALL, tempCallParams)
         }
 

@@ -21,6 +21,7 @@ import com.vdotok.app.utils.ViewUtils.fadeOut
 import com.vdotok.app.utils.ViewUtils.performSingleClick
 import com.vdotok.streaming.commands.CallInfoResponse
 import com.vdotok.streaming.enums.CallStatus
+import com.vdotok.streaming.enums.CallType
 import com.vdotok.streaming.enums.MediaType
 import com.vdotok.streaming.enums.SessionType
 import com.vdotok.streaming.models.CallParams
@@ -49,7 +50,11 @@ class InOutCallFragment : BaseFragment<FragmentCallBinding, CallViewModel>() {
             binding.isOutgoingCall = it.isInitiator
             binding.isVideoCall = it.mediaType == MediaType.VIDEO
             val title = getCallTitle(it.customDataPacket.toString())
-            binding.callTitle = title?.calleName.toString()
+            if (it.callType == CallType.ONE_TO_ONE) {
+                binding.callTitle = title?.calleName.toString()
+            }else{
+                binding.callTitle = title?.groupName.toString()
+            }
 
         } ?: run {
             setBinding()
@@ -127,7 +132,11 @@ class InOutCallFragment : BaseFragment<FragmentCallBinding, CallViewModel>() {
                 binding.isVideoCall = value.mediaType == MediaType.VIDEO
             }
             val title = getCallTitle(value.customDataPacket.toString())
-            binding.callTitle = title?.calleName.toString()
+            if (value.callType == CallType.ONE_TO_ONE) {
+                binding.callTitle = title?.calleName.toString()
+            }else{
+                binding.callTitle = title?.groupName.toString()
+            }
         }
     }
 

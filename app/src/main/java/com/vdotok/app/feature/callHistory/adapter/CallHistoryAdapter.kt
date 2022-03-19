@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vdotok.app.R
-import com.vdotok.app.utils.image_uri
 import com.vdotok.app.databinding.ItemCallHistoryRowBinding
 import com.vdotok.app.extensions.ViewExtension
 import com.vdotok.app.models.CallHistoryData

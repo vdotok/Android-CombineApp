@@ -42,8 +42,8 @@ object Utils {
             .toInt()
     }
 
-    fun setCallTitleCustomObject(title: String, autoCreated: String?): String {
-        return Gson().toJson(CallNameModel(title,autoCreated), CallNameModel::class.java)
+    fun setCallTitleCustomObject(calleName: String?, groupName: String?, autoCreated: String?): String {
+        return Gson().toJson(CallNameModel(calleName,groupName,autoCreated), CallNameModel::class.java)
     }
 
     fun getCallTitle(customObject: String): CallNameModel? {

@@ -11,5 +11,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class CallNameModel(
     var calleName: String? = null,
+    val groupName: String? = null,
     var groupAutoCreatedValue :String? = null
 ) : Parcelable

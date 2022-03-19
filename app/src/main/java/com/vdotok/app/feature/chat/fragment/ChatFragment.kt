@@ -214,7 +214,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
                         } else
                             viewModel.startPublicBroadCast(
                                 null, activity, true, getRefIDs(),
-                                viewModel.groupTitle.get().toString(),viewModel.groupModel.autoCreated
+                                viewModel.groupModel.groupTitle.toString(),viewModel.groupModel.autoCreated
                             )
 
                     }
@@ -267,13 +267,13 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
             mediaType = mediaType,
             callType = CallType.MANY_TO_MANY,
             sessionType = SessionType.CALL,
-            customDataPacket = viewModel.groupModel.groupTitle?.let { setCallTitleCustomObject(it,autoCreated.toString()) }
+            customDataPacket = setCallTitleCustomObject(null,viewModel.groupModel.groupTitle,autoCreated.toString())
         )
         val session = viewModel.appManager.getCallClient()?.dialMany2ManyCall(callParams)
         session?.let { it1 ->
             callParams.sessionUUID = it1
             callParams.customDataPacket =
-                setCallTitleCustomObject(viewModel.groupModel.groupTitle.toString(),autoCreated.toString())
+                setCallTitleCustomObject(null,viewModel.groupModel.groupTitle.toString(),autoCreated.toString())
             viewModel.appManager.setSession(SessionType.CALL, callParams)
 
         }
@@ -928,7 +928,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
         super.onSSSessionReady(mediaProjection)
         viewModel.startPublicBroadCast(
             mediaProjection, activity, true, getRefIDs(),
-            viewModel.groupTitle.get().toString(),
+            viewModel.groupModel.groupTitle.toString(),
             viewModel.groupModel.autoCreated
         )
     }
