@@ -8,7 +8,7 @@ import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
-interface ApiService {
+interface APIService {
 
     @POST("/API/v0/Login")
     suspend fun loginUser(@Body model: LoginUserModel): LoginResponse

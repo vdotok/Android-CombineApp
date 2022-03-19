@@ -24,6 +24,7 @@ import com.vdotok.app.uielements.CustomCallView
 import com.vdotok.app.utils.Utils
 import com.vdotok.app.utils.ViewUtils.performSingleClick
 import com.vdotok.connect.models.Presence
+import com.vdotok.network.network.NetworkConnectivity
 import com.vdotok.network.network.NetworkStatusLiveData
 import com.vdotok.streaming.commands.CallInfoResponse
 import com.vdotok.streaming.commands.RegisterResponse
@@ -91,7 +92,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
                     Log.i("Internet", "internet connection restored!")
                     viewModel.appManager.getCallClient()?.apply {
                         if (!isConnected()) {
-                            viewModel.appManager.reconnectCallSDKs()
+                            viewModel.appManager.reconnectCallSDKs(viewModel.appManager.activeSession.size > 0)
                         }
                     }
                 }
@@ -129,8 +130,12 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
             }
             EnumConnectionStatus.CLOSED ->
                 viewModel.appManager.callSDKStatus.set(false)
-            EnumConnectionStatus.ERROR ->
+            EnumConnectionStatus.ERROR -> {
                 viewModel.appManager.callSDKStatus.set(false)
+                if (NetworkConnectivity.isInternetAvailable(this)) {
+                    viewModel.appManager.reconnectCallSDKs(viewModel.appManager.activeSession.size > 0)
+                }
+            }
             EnumConnectionStatus.OPEN ->
                 viewModel.appManager.callSDKStatus.set(true)
             else -> {
