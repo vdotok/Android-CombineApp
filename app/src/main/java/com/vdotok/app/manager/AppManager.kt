@@ -90,6 +90,7 @@ class AppManager(val context: Context) {
 
     var isCallSDKsReconnect = false
 
+
     /**
      * Defines callbacks for service binding, passed to bindService()
      */
@@ -251,6 +252,9 @@ class AppManager(val context: Context) {
                                 removeSession(it.sessionType)
                                 removeVideoViews(it.refId, it.sessionUUID)
                             }
+                        }
+                        CallStatus.INSUFFICIENT_BALANCE->{
+                            isTimerRunning.set(false)
                         }
                         else -> {
                         }

@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.webkit.MimeTypeMap
 import androidx.annotation.RequiresApi

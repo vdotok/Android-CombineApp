@@ -200,8 +200,13 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     }
 
     override fun incomingCall(callParams: CallParams) {
-            viewModel.insertCallHistory(callParams,
-              callParams.refId, viewModel.resourcesProvider.getString(R.string.status_incoming_call), false, "",)
+        viewModel.insertCallHistory(
+            callParams,
+            callParams.refId,
+            viewModel.resourcesProvider.getString(R.string.status_incoming_call),
+            false,
+            "",
+        )
         startActivity(CallActivity.createCallActivity(this, callParams))
     }
 
@@ -231,17 +236,45 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
 //            }
 //        }
 //        if (matchedIndex == -1) {
-            viewModel.appManager.videoViews.add(
-                ActiveSession(
-                    refID = refId,
-                    sessionID = sessionID,
-                    videoTrack = stream,
-                    null
+        viewModel.appManager.videoViews.add(
+            ActiveSession(
+                refID = refId,
+                sessionID = sessionID,
+                videoTrack = stream,
+                null
+            )
+        )
+        if (viewModel.appManager.isCallActivityOpened.value == false)
+            addCallViews()
+//        }
+    }
+
+    override fun sendCurrentDataUsage(sessionKey: String, usage: Usage) {
+        viewModel.getOwnRefID().let { refId ->
+            Log.e(
+                "StatsLogger",
+                "currentSentUsage: ${usage.currentSentBytes}, currentReceivedUsage: ${usage.currentReceivedBytes}"
+            )
+            viewModel.appManager.getCallClient()?.sendEndCallLogs(
+                refId = refId,
+                sessionKey = sessionKey,
+                stats = PartialCallLogs(
+                    upload_bytes = usage.currentSentBytes.toString(),
+                    download_bytes = usage.currentReceivedBytes.toString()
                 )
             )
-            if (viewModel.appManager.isCallActivityOpened.value == false)
-                addCallViews()
-//        }
+        }
+    }
+
+    override fun sendEndDataUsage(sessionKey: String, sessionDataModel: SessionDataModel) {
+        viewModel.getOwnRefID().let { refId ->
+            Log.e("StatsLogger", "sessionData: $sessionDataModel")
+            viewModel.appManager.getCallClient()?.sendEndCallLogs(
+                refId = refId,
+                sessionKey = sessionKey,
+                stats = sessionDataModel
+            )
+        }
     }
 
     override fun onDestroy() {
@@ -323,33 +356,6 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         }
     }
 
-    override fun sendCurrentDataUsage(sessionKey: String, usage: Usage) {
-        viewModel.getOwnRefID().let { refId ->
-            Log.e(
-                "StatsLogger",
-                "currentSentUsage: ${usage.currentSentBytes}, currentReceivedUsage: ${usage.currentReceivedBytes}"
-            )
-            viewModel.appManager.getCallClient()?.sendEndCallLogs(
-                refId = refId,
-                sessionKey = sessionKey,
-                stats = PartialCallLogs(
-                    upload_bytes = usage.currentSentBytes.toString(),
-                    download_bytes = usage.currentReceivedBytes.toString()
-                )
-            )
-        }
-    }
-
-    override fun sendEndDataUsage(sessionKey: String, sessionDataModel: SessionDataModel) {
-        viewModel.getOwnRefID().let { refId ->
-            Log.e("StatsLogger", "sessionData: $sessionDataModel")
-            viewModel.appManager.getCallClient()?.sendEndCallLogs(
-                refId = refId,
-                sessionKey = sessionKey,
-                stats = sessionDataModel
-            )
-        }
-    }
 
     fun enableProximitySensor(enable: Boolean) {
         if (enable) {

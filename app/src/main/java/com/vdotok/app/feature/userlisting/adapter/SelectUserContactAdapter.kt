@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vdotok.app.R
-import com.vdotok.app.utils.MAX_PARTICIPANTS
+
 import com.vdotok.app.databinding.ItemAllUsersListWithActionsBinding
 import com.vdotok.app.extensions.ViewExtension.showSnackBar
 import com.vdotok.app.feature.userlisting.interfaces.OnContactItemClickInterface
+import com.vdotok.app.utils.MAX_PARTICIPANTS
 import com.vdotok.network.models.UserModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -72,7 +73,8 @@ class SelectUserContactAdapter(var context: Context,
         }
     }
     private fun setInitials(fullName: String?): String? {
-        return fullName?.substring(0, 1)
+            val name :String? = fullName?.substring(0, 1)
+            return name
     }
 
     private fun setCreateGroupUserListing(

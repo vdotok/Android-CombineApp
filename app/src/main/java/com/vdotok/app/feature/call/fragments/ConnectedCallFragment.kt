@@ -30,7 +30,6 @@ import com.vdotok.streaming.enums.MediaType
 import com.vdotok.streaming.enums.SessionType
 import org.webrtc.VideoTrack
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class ConnectedCallFragment : BaseFragment<FragmentCallConnectedBinding, CallViewModel>() {
@@ -42,7 +41,7 @@ class ConnectedCallFragment : BaseFragment<FragmentCallConnectedBinding, CallVie
     private var isBroadCastingReceiver = false
     private var isScreenCasting = false
     private var isCamCasting = false
-    private var countView : ObservableBoolean = ObservableBoolean(false)
+    private var countView: ObservableBoolean = ObservableBoolean(false)
     private var isAppAudioIncluded = false
     private var isAudioCall = false
     private var isPaused = false
@@ -250,11 +249,10 @@ class ConnectedCallFragment : BaseFragment<FragmentCallConnectedBinding, CallVie
                 isScreenCasting = true
                 isAppAudioIncluded = value.isAppAudio
             }
-
             val title = getCallTitle(value.customDataPacket.toString())
             if (value.callType == CallType.ONE_TO_ONE) {
                 binding.callTitle = title?.calleName.toString()
-            }else{
+            } else {
                 binding.callTitle = title?.groupName.toString()
             }
 
@@ -284,7 +282,7 @@ class ConnectedCallFragment : BaseFragment<FragmentCallConnectedBinding, CallVie
     }
 
     private fun checkSessionCancel() {
-        if (isPaused && viewModel.appManager.activeSession.size == 0){
+        if (isPaused && viewModel.appManager.activeSession.size == 0) {
             activity?.onBackPressed()
         }
     }
@@ -460,6 +458,14 @@ class ConnectedCallFragment : BaseFragment<FragmentCallConnectedBinding, CallVie
                     viewModel.appManager.countParticipant.set(0)
                     finish()
                 }
+            }
+            CallStatus.INSUFFICIENT_BALANCE -> {
+                activity?.apply {
+                    viewModel.appManager.speakerState = false
+                    viewModel.appManager.countParticipant.set(0)
+                    finish()
+                }
+
             }
             else -> {
             }

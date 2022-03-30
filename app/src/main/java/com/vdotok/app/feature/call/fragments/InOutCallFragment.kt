@@ -185,6 +185,9 @@ class InOutCallFragment : BaseFragment<FragmentCallBinding, CallViewModel>() {
                     updateMessageAndFinishActivity(callInfoResponse.responseMessage.toString())
                 }
             }
+            CallStatus.INSUFFICIENT_BALANCE ->{
+                updateMessageAndFinishActivity(callInfoResponse.responseMessage.toString())
+            }
             else -> {}
         }
     }

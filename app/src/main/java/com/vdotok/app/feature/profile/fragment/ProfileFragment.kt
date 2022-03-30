@@ -16,7 +16,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vdotok.app.R
 import com.vdotok.app.base.BaseFragment
 import com.vdotok.app.base.UserPreferences
-import com.vdotok.app.utils.type
 import com.vdotok.app.databinding.ProfileFragmentBinding
 import com.vdotok.app.extensions.ViewExtension.hide
 import com.vdotok.app.extensions.ViewExtension.showSnackBar
@@ -24,6 +23,7 @@ import com.vdotok.app.feature.profile.viewmodel.ProfileViewModel
 import com.vdotok.app.utils.PermissionUtils
 import com.vdotok.app.utils.ViewUtils.performSingleClick
 import com.vdotok.app.utils.getFileFromUri
+import com.vdotok.app.utils.type
 import com.vdotok.network.models.LoginResponse
 import com.vdotok.network.models.ProfileImageResponse
 import com.vdotok.network.network.NetworkConnectivity

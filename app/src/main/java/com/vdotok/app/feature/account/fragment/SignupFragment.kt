@@ -9,12 +9,12 @@ import androidx.databinding.ObservableField
 import com.vdotok.app.R
 import com.vdotok.app.base.BaseFragment
 import com.vdotok.app.base.UserPreferences
-import com.vdotok.app.utils.SDK_PROJECT_ID
 import com.vdotok.app.databinding.FragmentSignupBinding
 import com.vdotok.app.extensions.ViewExtension.hideKeyboard
 import com.vdotok.app.extensions.ViewExtension.showSnackBar
 import com.vdotok.app.feature.account.viewmodel.AccountViewModel
 import com.vdotok.app.feature.dashboard.Dashboard.Companion.createDashBoardActivity
+import com.vdotok.app.utils.SDK_PROJECT_ID
 import com.vdotok.app.utils.Utils
 import com.vdotok.app.utils.ValidationUtils.afterTextChanged
 import com.vdotok.app.utils.ValidationUtils.checkEmail

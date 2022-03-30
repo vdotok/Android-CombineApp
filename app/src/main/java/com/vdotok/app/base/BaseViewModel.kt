@@ -150,7 +150,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
         callTitle: String,
         autoCreated: Int?
     ) {
-        var participantsID :String?= null
+        var participantsID: String? = null
         var callParams: CallParams? = null
         if (appManager.isCamEnableInMultiCast)
             if (appManager.isSSEnableInMultiCast) {
@@ -159,7 +159,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
                         SessionType.CALL,
                         true,
                         getIsBroadCastInteger(isGroupBroadcast),
-                        toRefIDs, callTitle,autoCreated.toString()
+                        toRefIDs, callTitle, autoCreated.toString()
                     ),
                     mediaProjection,
                     isGroupBroadcast
@@ -192,7 +192,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
                     false,
                     getIsBroadCastInteger(isGroupBroadcast),
                     toRefIDs,
-                    callTitle,autoCreated.toString()
+                    callTitle, autoCreated.toString()
                 )
                 val session = appManager.getCallClient()?.dialOne2ManyCall(callParams!!)
                 session?.let { it1 ->
@@ -205,7 +205,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
                 SessionType.SCREEN,
                 appManager.isAppAudioEnableInMultiCast,
                 getIsBroadCastInteger(isGroupBroadcast),
-                toRefIDs, callTitle,autoCreated.toString()
+                toRefIDs, callTitle, autoCreated.toString()
             )
             val session = appManager.getCallClient()?.startSession(callParams!!, mediaProjection)
             session?.let { it1 ->
@@ -213,20 +213,20 @@ BaseViewModel @Inject constructor() : ViewModel() {
                 appManager.setSession(SessionType.SCREEN, callParams!!)
             }
         }
-        if (toRefIDs.size > 1 || callParams?.isBroadcast == 1){
+        if (toRefIDs.size > 1 || callParams?.isBroadcast == 1) {
             participantsID = null
-        }else{
+        } else {
             toRefIDs.forEach {
                 participantsID = it
             }
         }
-            insertCallHistory(
-                callParams,
-                participantsID,
-                resourcesProvider.getString(R.string.status_outgoing_call),
-                true,
-                callTitle
-            )
+        insertCallHistory(
+            callParams,
+            participantsID,
+            resourcesProvider.getString(R.string.status_outgoing_call),
+            true,
+            callTitle
+        )
         activity?.startActivity(CallActivity.createCallActivity(activity))
     }
 
@@ -238,14 +238,14 @@ BaseViewModel @Inject constructor() : ViewModel() {
         callTitle: String
     ) {
 
-        val data :CallNameModel? = Utils.getCallTitle(callParams?.customDataPacket.toString())
-        val title = if (isInitiator){
+        val data: CallNameModel? = Utils.getCallTitle(callParams?.customDataPacket.toString())
+        val title = if (isInitiator) {
             callTitle
-        } else{
+        } else {
             if (callParams?.callType == CallType.ONE_TO_ONE) {
                 data?.calleName
-            }else{
-              data?.groupName
+            } else {
+                data?.groupName
             }
         }
 
@@ -278,7 +278,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
         isGroupBroadcast: Int,
         toRefIDs: ArrayList<String>,
         callTitle: String,
-       autoCreated: String
+        autoCreated: String
     ): CallParams {
         return CallParams(
             refId = getOwnRefID(),
@@ -289,7 +289,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
             isInitiator = true,
             isAppAudio = isAppAudioIncluded,
             isBroadcast = isGroupBroadcast,
-            customDataPacket = Utils.setCallTitleCustomObject(null,callTitle,autoCreated)
+            customDataPacket = Utils.setCallTitleCustomObject(null, callTitle, autoCreated)
         )
     }
 
@@ -310,7 +310,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
             isAppAudio = isAppAudioIncluded,
             isBroadcast = isGroupBroadcast,
             isInitiator = true,
-            customDataPacket = Utils.setCallTitleCustomObject(null,callTitle,autoCreated)
+            customDataPacket = Utils.setCallTitleCustomObject(null, callTitle, autoCreated)
         )
     }
 
