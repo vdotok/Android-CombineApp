@@ -52,7 +52,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/screen_share"
+        android:src="@drawable/ic_mic_off_full"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

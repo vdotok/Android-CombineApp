@@ -16,7 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vdotok.app.R
 import com.vdotok.app.base.BaseFragment
 import com.vdotok.app.base.UserPreferences
-import com.vdotok.app.utils.type
+import com.vdotok.app.constants.type
 import com.vdotok.app.databinding.ProfileFragmentBinding
 import com.vdotok.app.extensions.ViewExtension.hide
 import com.vdotok.app.extensions.ViewExtension.showSnackBar
@@ -89,6 +89,7 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding, ProfileViewModel>()
                         .observe(viewLifecycleOwner) {
                             when (it) {
                                 is Result.Loading -> {
+                                showProgress(requireContext(),getString(R.string.loading_profile))
                                 }
                                 is Result.Success -> {
                                     handleLoginResponse(it.data)
@@ -116,6 +117,7 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding, ProfileViewModel>()
         val file = UserPreferences.userData as LoginResponse
         file.profile_pic = data.image
         UserPreferences.userData = file
+        hideProgress()
     }
 
 

@@ -34,6 +34,13 @@
             name="toolbarTitle"
             type="String" />
 
+        <variable
+            name="dp"
+            type="String" />
+        <variable
+            name="imageAvailable"
+            type="Boolean" />
+
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +53,8 @@
         layout="@layout/custom_toolbar"
         bind:showBackIcon="@{showBackIcon}"
         bind:isActiveSession="@{isActiveSession}"
+        bind:imageAvailable="@{imageAvailable}"
+        bind:dp="@{dp}"
         bind:showIcon="@{showIcon}"
         bind:showCheckIcon="@{showCheckIcon}"
         bind:toolbarTitle="@{toolbarTitle}" />

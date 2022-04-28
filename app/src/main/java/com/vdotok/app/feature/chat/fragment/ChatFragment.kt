@@ -21,8 +21,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.vdotok.app.R
 import com.vdotok.app.base.BaseFragment
-import com.vdotok.app.utils.directoryName
-import com.vdotok.app.utils.docMimeType
+import com.vdotok.app.constants.directoryName
+import com.vdotok.app.constants.docMimeType
 import com.vdotok.app.databinding.FragmentChatBinding
 import com.vdotok.app.extensions.ViewExtension.hide
 import com.vdotok.app.extensions.ViewExtension.show
@@ -58,7 +58,6 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.concurrent.timerTask
 
 class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileClickListener {
@@ -151,7 +150,11 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
             PermissionUtils.getVideoCallPermissions(
                 requireContext(),
                 {
-                    dialCall(com.vdotok.streaming.enums.MediaType.VIDEO, getRefIDs(),viewModel.groupModel.autoCreated)
+                    dialCall(
+                        com.vdotok.streaming.enums.MediaType.VIDEO,
+                        getRefIDs(),
+                        viewModel.groupModel.autoCreated
+                    )
                 }, {},
                 {
                     showVideoCallPermissionsRequiredDialog(false)
@@ -196,7 +199,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
             )
         }
 
-        binding.customToolbar.groupBroadcast.performSingleClick{
+        binding.customToolbar.groupBroadcast.performSingleClick {
             broadcastOptionsFragment =
                 BroadcastOptionsFragment(object : BroadcastOptionsFragment.OnOptionSelection {
                     override fun selectedOptions(
@@ -213,8 +216,12 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
                             startForProjection.launch(captureIntent)
                         } else
                             viewModel.startPublicBroadCast(
-                                null, activity, true, getRefIDs(),
-                                viewModel.groupModel.groupTitle.toString(),viewModel.groupModel.autoCreated
+                                null,
+                                activity,
+                                true,
+                                getRefIDs(),
+                                viewModel.groupModel.groupTitle.toString(),
+                                viewModel.groupModel.autoCreated
                             )
 
                     }
@@ -223,6 +230,16 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
             broadcastOptionsFragment?.show(childFragmentManager, BroadcastOptionsFragment.TAG)
 
         }
+    }
+
+    override fun multiSessionReady(sessionIds: Pair<String, String>) {
+        viewModel.setupMultiSessionData(
+            sessionIds,
+            true,
+            getRefIDs(),
+            viewModel.groupModel.groupTitle.toString(),
+            viewModel.groupModel.autoCreated
+        )
     }
 
     private fun getRefIDs(): ArrayList<String> {
@@ -267,20 +284,28 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
             mediaType = mediaType,
             callType = CallType.MANY_TO_MANY,
             sessionType = SessionType.CALL,
-            customDataPacket = setCallTitleCustomObject(null,viewModel.groupModel.groupTitle,autoCreated.toString())
+            customDataPacket = setCallTitleCustomObject(
+                null,
+                viewModel.groupModel.groupTitle,
+                autoCreated.toString()
+            )
         )
         val session = viewModel.appManager.getCallClient()?.dialMany2ManyCall(callParams)
         session?.let { it1 ->
             callParams.sessionUUID = it1
             callParams.customDataPacket =
-                setCallTitleCustomObject(null,viewModel.groupModel.groupTitle.toString(),autoCreated.toString())
+                setCallTitleCustomObject(
+                    null,
+                    viewModel.groupModel.groupTitle.toString(),
+                    autoCreated.toString()
+                )
             viewModel.appManager.setSession(SessionType.CALL, callParams)
 
         }
-        var participantsId :String? = null
-        if (refIds.size > 1){
+        var participantsId: String? = null
+        if (refIds.size > 1) {
             participantsId = null
-        }else{
+        } else {
             refIds.forEach {
                 participantsId = it
             }
@@ -322,6 +347,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
         }
         adapter.setHasStableIds(true)
         binding.rcvMsgList.adapter = adapter
+        binding.rcvMsgList.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom -> if (bottom < oldBottom) scrollToLast() }
         scrollToLast()
     }
 
@@ -518,7 +544,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
         chatUtils.file?.let { file ->
             viewModel.insertChatModel(message, viewModel.groupModel.id, file.absolutePath)
             chatUtils.file = null
-        }?: kotlin.run {
+        } ?: kotlin.run {
             viewModel.insertChatModel(message, viewModel.groupModel.id, "")
         }
     }

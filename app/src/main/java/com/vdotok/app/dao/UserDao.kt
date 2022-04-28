@@ -10,7 +10,7 @@ interface UserDao {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUsers(userModel: UserModel)
 
     @Suppress("RedundantSuspendModifier")
@@ -32,4 +32,5 @@ interface UserDao {
     @WorkerThread
     @Query("SELECT * FROM Users Where refId = :Refid")
     suspend fun getUserNameFromRefId(Refid: String): UserModel
+
 }

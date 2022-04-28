@@ -2,7 +2,7 @@ package com.vdotok.app.feature.account.viewmodel
 
 import androidx.lifecycle.liveData
 import com.vdotok.app.base.BaseViewModel
-import com.vdotok.app.utils.SDK_PROJECT_ID
+import com.vdotok.app.constants.SDK_PROJECT_ID
 import com.vdotok.network.models.CheckUserModel
 import com.vdotok.network.models.LoginUserModel
 import com.vdotok.network.models.SignUpModel

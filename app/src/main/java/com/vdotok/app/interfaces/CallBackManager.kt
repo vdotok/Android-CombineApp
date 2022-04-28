@@ -42,6 +42,7 @@ interface CallBackManager {
     fun onTimeTicks(timer: String)
     fun onSSSessionReady(mediaProjection: MediaProjection?)
     fun onPublicURL(url: String)
+    fun multiSessionReady(sessionIds: Pair<String, String>) {}
     fun sendCurrentDataUsage(sessionKey: String, usage: Usage){}
     fun sendEndDataUsage(sessionKey: String, sessionDataModel: SessionDataModel){}
 }

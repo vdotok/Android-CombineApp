@@ -199,7 +199,7 @@ class AllUsersListFragment : BaseFragment<FragmentAllUsersListBinding, AllUsersV
         session?.let { it1 ->
             val tempCallParams = callParams.copy()
             tempCallParams.sessionUUID = it1
-            tempCallParams.customDataPacket = setCallTitleCustomObject(callTitle,null,"1")
+            tempCallParams.customDataPacket = setCallTitleCustomObject(viewModel.getOwnUsername(),null,"1")
             viewModel.appManager.setSession(SessionType.CALL, tempCallParams)
         }
 

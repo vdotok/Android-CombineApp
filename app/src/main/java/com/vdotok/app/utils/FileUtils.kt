@@ -9,9 +9,14 @@ import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.webkit.MimeTypeMap
 import androidx.annotation.RequiresApi
+import com.vdotok.app.constants.AUDIO_DIRECTORY
+import com.vdotok.app.constants.DOCS_DIRECTORY
+import com.vdotok.app.constants.IMAGES_DIRECTORY
+import com.vdotok.app.constants.VIDEO_DIRECTORY
 import com.vdotok.connect.models.MediaType
 import com.vdotok.connect.utils.ImageUtils
 import com.vdotok.connect.utils.ImageUtils.copyFileToInternalStorage

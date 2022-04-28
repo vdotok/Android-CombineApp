@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.content.Context
 import android.media.projection.MediaProjection
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
 import android.view.View
@@ -17,6 +19,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.norgic.spotsdialog.SpotsDialog
 import com.vdotok.app.R
 import com.vdotok.app.databinding.ActivityBaseBinding
+import com.vdotok.app.extensions.ViewExtension.invisible
+import com.vdotok.app.extensions.ViewExtension.show
 import com.vdotok.app.feature.call.CallActivity
 import com.vdotok.app.interfaces.CallBackManager
 import com.vdotok.app.models.ActiveSession
@@ -182,6 +186,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
                     removeView(it.sessionUUID, it.toRefIds)
                 }
             }
+            CallStatus.OUTGOING_CALL_ENDED -> rootBinding.notificationLayout.callTime.text = ""
         }
     }
 
@@ -200,8 +205,13 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     }
 
     override fun incomingCall(callParams: CallParams) {
-            viewModel.insertCallHistory(callParams,
-              callParams.refId, viewModel.resourcesProvider.getString(R.string.status_incoming_call), false, "",)
+        viewModel.insertCallHistory(
+            callParams,
+            callParams.refId,
+            viewModel.resourcesProvider.getString(R.string.status_incoming_call),
+            false,
+            "",
+        )
         startActivity(CallActivity.createCallActivity(this, callParams))
     }
 
@@ -231,17 +241,45 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
 //            }
 //        }
 //        if (matchedIndex == -1) {
-            viewModel.appManager.videoViews.add(
-                ActiveSession(
-                    refID = refId,
-                    sessionID = sessionID,
-                    videoTrack = stream,
-                    null
+        viewModel.appManager.videoViews.add(
+            ActiveSession(
+                refID = refId,
+                sessionID = sessionID,
+                videoTrack = stream,
+                null
+            )
+        )
+        if (viewModel.appManager.isCallActivityOpened.value == false)
+            addCallViews()
+//        }
+    }
+
+    override fun sendCurrentDataUsage(sessionKey: String, usage: Usage) {
+        viewModel.getOwnRefID().let { refId ->
+            Log.e(
+                "StatsLogger",
+                "currentSentUsage: ${usage.currentSentBytes}, currentReceivedUsage: ${usage.currentReceivedBytes}"
+            )
+            viewModel.appManager.getCallClient()?.sendEndCallLogs(
+                refId = refId,
+                sessionKey = sessionKey,
+                stats = PartialCallLogs(
+                    upload_bytes = usage.currentSentBytes.toString(),
+                    download_bytes = usage.currentReceivedBytes.toString()
                 )
             )
-            if (viewModel.appManager.isCallActivityOpened.value == false)
-                addCallViews()
-//        }
+        }
+    }
+
+    override fun sendEndDataUsage(sessionKey: String, sessionDataModel: SessionDataModel) {
+        viewModel.getOwnRefID().let { refId ->
+            Log.e("StatsLogger", "sessionData: $sessionDataModel")
+            viewModel.appManager.getCallClient()?.sendEndCallLogs(
+                refId = refId,
+                sessionKey = sessionKey,
+                stats = sessionDataModel
+            )
+        }
     }
 
     override fun onDestroy() {
@@ -257,10 +295,11 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
             if (mediaType == MediaType.AUDIO)
                 enableProximitySensor(true)
         }
-        if (viewModel.appManager.isCallActivityOpened.value == false && viewModel.appManager.isTimerRunning.get())
+        if (viewModel.appManager.isCallActivityOpened.value == false && viewModel.appManager.isTimerRunning.get()) {
             if (viewModel.appManager.activeSession.size != 0 && viewModel.appManager.videoViews.size != 0) {
                 addCallViews()
             }
+        }
     }
 
     private fun addCallViews() {
@@ -300,6 +339,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
 
     override fun onPause() {
         super.onPause()
+        rootBinding.notificationLayout.callTime.text = ""
         enableProximitySensor(false)
         viewModel.appManager.removeListener(this)
         viewModel.appManager.videoViews.forEach {
@@ -323,33 +363,6 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         }
     }
 
-    override fun sendCurrentDataUsage(sessionKey: String, usage: Usage) {
-        viewModel.getOwnRefID().let { refId ->
-            Log.e(
-                "StatsLogger",
-                "currentSentUsage: ${usage.currentSentBytes}, currentReceivedUsage: ${usage.currentReceivedBytes}"
-            )
-            viewModel.appManager.getCallClient()?.sendEndCallLogs(
-                refId = refId,
-                sessionKey = sessionKey,
-                stats = PartialCallLogs(
-                    upload_bytes = usage.currentSentBytes.toString(),
-                    download_bytes = usage.currentReceivedBytes.toString()
-                )
-            )
-        }
-    }
-
-    override fun sendEndDataUsage(sessionKey: String, sessionDataModel: SessionDataModel) {
-        viewModel.getOwnRefID().let { refId ->
-            Log.e("StatsLogger", "sessionData: $sessionDataModel")
-            viewModel.appManager.getCallClient()?.sendEndCallLogs(
-                refId = refId,
-                sessionKey = sessionKey,
-                stats = sessionDataModel
-            )
-        }
-    }
 
     fun enableProximitySensor(enable: Boolean) {
         if (enable) {

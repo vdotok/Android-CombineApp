@@ -2,6 +2,7 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -28,6 +29,13 @@
             name="isActiveSession"
             type="androidx.databinding.ObservableBoolean" />
 
+        <variable
+            name="dp"
+            type="String" />
+        <variable
+            name="imageAvailable"
+            type="Boolean" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +54,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <include
+            android:id="@+id/groupInitial"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            layout="@layout/profile_dp"
+            android:visibility="@{showBackIcon == false ? View.VISIBLE: View.GONE}"
+            bind:imageAvailable="@{imageAvailable}"
+            bind:dp="@{dp}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_title"  />
+
         <TextView
             android:id="@+id/tv_title"
             style="@style/Toolbar_Text"
@@ -55,7 +76,7 @@
             android:layout_marginEnd="20dp"
             android:text="@{toolbarTitle}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/img_arrow_back"
+            app:layout_constraintStart_toEndOf="@id/barrierGroupBottom"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Toolbar Title" />
 
@@ -83,6 +104,13 @@
             app:layout_constraintBottom_toBottomOf="@id/img_done"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/img_done" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierGroupBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="img_arrow_back,groupInitial"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

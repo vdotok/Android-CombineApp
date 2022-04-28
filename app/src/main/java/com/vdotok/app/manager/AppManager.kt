@@ -9,15 +9,16 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import com.vdotok.app.base.UserPreferences
+import com.vdotok.app.constants.SDK_PROJECT_ID
 import com.vdotok.app.interfaces.CallBackManager
 import com.vdotok.app.models.ActiveSession
 import com.vdotok.app.models.CallHistoryDetails
 import com.vdotok.app.services.ProjectionService
-import com.vdotok.app.utils.SDK_PROJECT_ID
 import com.vdotok.connect.manager.ChatManager
 import com.vdotok.connect.manager.ChatManagerCallback
 import com.vdotok.connect.models.*
@@ -56,7 +57,7 @@ class AppManager(val context: Context) {
     val callSDKRegistrationStatus: ObservableBoolean = ObservableBoolean(false)
     val chatSDKStatus: ObservableBoolean = ObservableBoolean(false)
     val isTimerRunning: ObservableBoolean = ObservableBoolean(false)
-    var countParticipant : ObservableInt = ObservableInt(0)
+    var countParticipant: ObservableInt = ObservableInt(0)
 
     val listeners: ArrayList<CallBackManager> = ArrayList()
 
@@ -67,7 +68,7 @@ class AppManager(val context: Context) {
     lateinit var runnable: Runnable
     var isCallActivityOpened = MutableLiveData<Boolean>(false)
     var callList: ArrayList<CallHistoryDetails> = ArrayList()
-    var prefList : ArrayList<CallHistoryDetails> = ArrayList()
+    var prefList: ArrayList<CallHistoryDetails> = ArrayList()
 
     var mapGroupMessages: MutableMap<String, ArrayList<Message>> = mutableMapOf()
     var mapLastMessage: MutableMap<String, ArrayList<Message>> = mutableMapOf()
@@ -89,7 +90,6 @@ class AppManager(val context: Context) {
     var userPresenceList: ArrayList<Presence> = ArrayList()
 
     var isCallSDKsReconnect = false
-
     /**
      * Defines callbacks for service binding, passed to bindService()
      */
@@ -211,6 +211,7 @@ class AppManager(val context: Context) {
             it.viewRenderer?.apply {
                 it.videoTrack.removeSink(preview)
                 release()
+                visibility = View.GONE
                 it.viewRenderer = null
             }
 
@@ -252,6 +253,9 @@ class AppManager(val context: Context) {
                                 removeVideoViews(it.refId, it.sessionUUID)
                             }
                         }
+                        CallStatus.INSUFFICIENT_BALANCE -> {
+                            isTimerRunning.set(false)
+                        }
                         else -> {
                         }
                     }
@@ -290,6 +294,14 @@ class AppManager(val context: Context) {
                         notifyIncomingCall(callParams)
                     }
                 }
+            }
+
+            override fun multiSessionCreated(sessionIds: Pair<String, String>) {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    for (listener in listeners) {
+                        listener.multiSessionReady(sessionIds)
+                    }
+                }, 1000)
             }
 
             override fun onCameraStream(stream: VideoTrack) {
@@ -343,13 +355,13 @@ class AppManager(val context: Context) {
                 }, 1000)
             }
 
-            override fun participantCount(participantCount: Int, participantRefIdList: ArrayList<String>) {
-                Handler(Looper.getMainLooper()).postDelayed({
-                    for (listener in listeners) {
-                        listener.countParticipant(participantCount, participantRefIdList)
-                    }
-                }, 1000)
-            }
+//            override fun participantCount(participantCount: Int, participantRefIdList: ArrayList<String>) {
+//                Handler(Looper.getMainLooper()).postDelayed({
+//                    for (listener in listeners) {
+//                        listener.countParticipant(participantCount, participantRefIdList)
+//                    }
+//                }, 1000)
+//            }
 
             override fun registrationStatus(registerResponse: RegisterResponse) {
                 for (listener in listeners) {

@@ -17,7 +17,7 @@
     <application
         android:name=".VdoTok"
         android:allowBackup="false"
-        android:fullBackupContent="false"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/logo_main"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo_main"
