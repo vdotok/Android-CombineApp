@@ -38,13 +38,10 @@ import com.vdotok.app.feature.chat.enums.FileSelectionEnum
 import com.vdotok.app.feature.chat.enums.MimeTypeEnum
 import com.vdotok.app.feature.chat.viewmodel.ChatViewModel
 import com.vdotok.app.feature.dashboard.dialog.BroadcastOptionsFragment
-import com.vdotok.app.utils.PermissionUtils
+import com.vdotok.app.utils.*
 import com.vdotok.app.utils.Utils.setCallTitleCustomObject
 import com.vdotok.app.utils.ValidationUtils.afterTextChanged
 import com.vdotok.app.utils.ViewUtils.performSingleClick
-import com.vdotok.app.utils.converFileToByteArray
-import com.vdotok.app.utils.getFileData
-import com.vdotok.app.utils.getMimeType
 import com.vdotok.connect.models.*
 import com.vdotok.connect.utils.ImageUtils
 import com.vdotok.connect.utils.ImageUtils.copyFileToInternalStorage

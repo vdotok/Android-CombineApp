@@ -90,6 +90,8 @@ class AppManager(val context: Context) {
     var userPresenceList: ArrayList<Presence> = ArrayList()
 
     var isCallSDKsReconnect = false
+
+
     /**
      * Defines callbacks for service binding, passed to bindService()
      */
