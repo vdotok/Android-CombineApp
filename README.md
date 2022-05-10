@@ -39,7 +39,7 @@ Bravo! You’ve successfully configured the project in Android Studio.
 
 <b>Project Signup:</b>
 * Register your account on [VdoTok](https://www.vdotok.com/) to get the <b>Project ID</b> and <b>API Service URL</b>
-* From file explorer, double-click on <b>vdotok -> app -> src -> main -> java -> com -> vdotok -> app -> utils -> ApplicationConstants</b> replace <b>SDK_PROJECT_ID</b> with your own <b>Project Id</b>
+* From file explorer, double-click on <b>vdotok -> app -> src -> main -> java -> com -> vdotok -> app -> constants -> ApplicationConstants</b> replace <b>SDK_PROJECT_ID</b> with your own <b>Project Id</b>
 * From file explorer, double-click on <b>vdotok -> Network -> src -> main -> java -> com -> vdotok -> network -> utils -> Constants</b> replace <b>BASE_URL</b> with your own <b>API Service URL</b>
 
 <b>Device Setting:</b>
