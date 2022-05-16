@@ -22,8 +22,6 @@ import com.vdotok.app.R
 import com.vdotok.app.base.BaseFragment
 import com.vdotok.app.base.UserPreferences
 import com.vdotok.app.databinding.FragmentGroupListingBinding
-import com.vdotok.app.extensions.ViewExtension.hide
-import com.vdotok.app.extensions.ViewExtension.show
 import com.vdotok.app.extensions.ViewExtension.showSnackBar
 import com.vdotok.app.feature.chat.ChatActivity.Companion.createChatActivity
 import com.vdotok.app.feature.chat.chatUtils.ChatFileUtils
@@ -512,8 +510,8 @@ class GroupListingFragment : BaseFragment<FragmentGroupListingBinding, Dashboard
         msgId: String
     ) {
         super.onFileReceivedCompleted(headerModel, byteArray, msgId)
-        checkForStoragePermissions(msgId, headerModel, byteArray)
         viewModel.groupModel = groupDataList.find { it.channelName == headerModel.topic }!!
+        checkForStoragePermissions(msgId, headerModel, byteArray)
         chatUtils.checkAndroidVersionToSave(headerModel, byteArray) {
             chatUtils.sendAttachmentMessage(
                 this::onNewMessage,
@@ -552,7 +550,11 @@ class GroupListingFragment : BaseFragment<FragmentGroupListingBinding, Dashboard
 
     }
 
-    private fun saveFile(msgId: String, headerModel: HeaderModel, byteArray: ByteArray) {
+    private fun saveFile(
+        msgId: String,
+        headerModel: HeaderModel,
+        byteArray: ByteArray
+    ) {
         chatUtils.checkAndroidVersionToSave(headerModel, byteArray) {
             chatUtils.sendAttachmentMessage(
                 this::onNewMessage,

@@ -8,6 +8,7 @@ import com.vdotok.app.R
 import com.vdotok.app.base.BaseActivity
 import com.vdotok.app.databinding.ActivityCallBinding
 import com.vdotok.app.feature.call.viewmodel.CallViewModel
+import com.vdotok.network.models.GroupModel
 import com.vdotok.streaming.enums.MediaType
 import com.vdotok.streaming.enums.SessionType
 import com.vdotok.streaming.models.CallParams
@@ -53,12 +54,42 @@ class CallActivity : BaseActivity<ActivityCallBinding, CallViewModel>() {
         }
     }
 
+    override fun multiSessionReady(sessionIds: Pair<String, String>) {
+        val groupModel = intent.getParcelableExtra<GroupModel>(GROUP_MODEL)
+        groupModel?.let {
+            viewModel.groupModel = it
+            viewModel.setupMultiSessionData(
+                sessionIds,
+                true,
+                viewModel.getRefIDs(),
+                viewModel.groupModel.groupTitle.toString(),
+                viewModel.groupModel.autoCreated
+            )
+        }?: kotlin.run {
+//            this is public broadcast case from GroupListingFragment
+            viewModel.setupMultiSessionData(
+                sessionIds,
+                false,
+                arrayListOf(),
+                resources.getString(R.string.public_broadcast),
+                0
+            )
+        }
+    }
+
     companion object {
         val CALL_TITLE = "call_title"
         val SELECTED_SCREEN = "selected_screen"
         val CALL_PARAMS = "call_params"
+        val GROUP_MODEL = "group_model"
+
         fun createCallActivity(context: Context) = Intent(context, CallActivity::class.java).apply {
             putExtra(SELECTED_SCREEN, "not_connected")
+        }
+
+        fun createCallActivityV2(context: Context, groupModel: GroupModel) = Intent(context, CallActivity::class.java).apply {
+            putExtra(SELECTED_SCREEN, "not_connected")
+            putExtra(GROUP_MODEL, groupModel)
         }
 
         fun createCallActivityForCallConnectedFragment(context: Context) =

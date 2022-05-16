@@ -16,6 +16,7 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -38,10 +39,13 @@ import com.vdotok.app.feature.chat.enums.FileSelectionEnum
 import com.vdotok.app.feature.chat.enums.MimeTypeEnum
 import com.vdotok.app.feature.chat.viewmodel.ChatViewModel
 import com.vdotok.app.feature.dashboard.dialog.BroadcastOptionsFragment
-import com.vdotok.app.utils.*
+import com.vdotok.app.utils.PermissionUtils
 import com.vdotok.app.utils.Utils.setCallTitleCustomObject
 import com.vdotok.app.utils.ValidationUtils.afterTextChanged
 import com.vdotok.app.utils.ViewUtils.performSingleClick
+import com.vdotok.app.utils.converFileToByteArray
+import com.vdotok.app.utils.getFileData
+import com.vdotok.app.utils.getMimeType
 import com.vdotok.connect.models.*
 import com.vdotok.connect.utils.ImageUtils
 import com.vdotok.connect.utils.ImageUtils.copyFileToInternalStorage
@@ -676,7 +680,6 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
         }
         uri?.let {
             val intent = Intent(Intent.ACTION_GET_CONTENT, it)
-
             intent.type = fileSelectionEnum.value
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
@@ -699,8 +702,16 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
                 startForResultDocument.launch(intent)
             }
             else -> {
-                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startForResultCamera.launch(intent)
+                for (values in viewModel.appManager.activeSession.values) {
+                    if (values.associatedSessionUUID.isEmpty()) {
+                        if (values.mediaType == com.vdotok.streaming.enums.MediaType.VIDEO && values.sessionType == SessionType.CALL) {
+                            Toast.makeText(context, "Camera cannot be used", Toast.LENGTH_SHORT).show() }
+                        else {
+                            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                            startForResultCamera.launch(intent) }
+                    } else {
+                        Toast.makeText(context, "Camera cannot be used", Toast.LENGTH_SHORT).show()}
+                }
             }
         }
     }
@@ -787,7 +798,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
             binding.progressBar.show()
         }
         data?.data?.let { uri ->
-            when (val mimeType = getMimeType(requireContext(), uri)) {
+            val mimeType = getMimeType(requireContext(), uri)
+            when (mimeType?.substring( 0, mimeType.indexOf("/"))) {
                 MimeTypeEnum.IMAGE.value -> {
                     val pathDirectory = Environment.DIRECTORY_PICTURES
                     val mediaUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -844,13 +856,38 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
                         fileType
                     )
                 }
+                MimeTypeEnum.DOCTEXT.value -> {
+                    val mediaUri = MediaStore.Files.getContentUri("external")
+                    val pathDirectory = Environment.DIRECTORY_DOCUMENTS
+                    val mediaType = MediaType.FILE
+                    fileType = 3
+                    handleDataFromSelection(
+                        data,
+                        mimeType,
+                        pathDirectory,
+                        mediaUri,
+                        mediaType,
+                        fileType
+                    )
+                }
             }
-            viewModel.appManager.getChatClient()?.sendFileToGroup(
-                viewModel.groupModel.channelKey,
-                viewModel.groupModel.channelName,
-                chatUtils.file,
-                fileType
-            )
+            chatUtils.file?.let {
+                if (it.length() > com.vdotok.app.constants.FILE_SIZE_LIMIT) {
+                    binding.progressBar.hide()
+                    Toast.makeText(
+                        context,
+                        "File size should be less than 6MB",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    viewModel.appManager.getChatClient()?.sendFileToGroup(
+                        viewModel.groupModel.channelKey,
+                        viewModel.groupModel.channelName,
+                        it,
+                        fileType
+                    )
+                }
+            }
         }
     }
 
@@ -863,7 +900,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             activity?.applicationContext?.let { context ->
-                val byteArray = when (mimeType) {
+                val byteArray = when (mimeType?.substring( 0, mimeType.indexOf("/"))) {
                     MimeTypeEnum.IMAGE.value -> {
                         ImageUtils.convertImageToByte(context, Uri.parse(data?.data.toString()))
                     }
@@ -878,6 +915,11 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
                         converFileToByteArray(audioPath)
                     }
                     MimeTypeEnum.DOC.value -> {
+                        val filePath =
+                            data?.data?.let { copyFileToInternalStorage(context, it, "document") }
+                        converFileToByteArray(filePath)
+                    }
+                    MimeTypeEnum.DOCTEXT.value -> {
                         val filePath =
                             data?.data?.let { copyFileToInternalStorage(context, it, "document") }
                         converFileToByteArray(filePath)

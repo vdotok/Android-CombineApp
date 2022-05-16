@@ -8,10 +8,11 @@ package com.vdotok.app.feature.chat.enums
 
 enum class MimeTypeEnum(value: String) {
 
-    IMAGE("image/jpeg"),
-    AUDIO("audio/x-wav"),
-    VIDEO("video/mp4"),
-    DOC("application/pdf");
+    IMAGE("image"),
+    AUDIO("audio"),
+    VIDEO("video"),
+    DOCTEXT("text"),
+    DOC("application");
 
     var value: String
         internal set

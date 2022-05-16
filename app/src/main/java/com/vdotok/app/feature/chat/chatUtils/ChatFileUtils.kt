@@ -38,22 +38,22 @@ class ChatFileUtils(var context: Context, var appManager: AppManager) {
                 MediaType.IMAGE.value -> {
                     mediaUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                     pathDirectory = Environment.DIRECTORY_PICTURES
-                    mimeType = MimeTypeEnum.IMAGE.value
+                    mimeType = "image/jpeg"
                 }
                 MediaType.VIDEO.value -> {
                     mediaUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
                     pathDirectory = Environment.DIRECTORY_MOVIES
-                    mimeType = MimeTypeEnum.VIDEO.value
+                    mimeType = "video/mp4"
                 }
                 MediaType.AUDIO.value -> {
                     mediaUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
                     pathDirectory = Environment.DIRECTORY_MUSIC
-                    mimeType = MimeTypeEnum.AUDIO.value
+                    mimeType = "audio/x-wav"
                 }
                 MediaType.FILE.value -> {
                     mediaUri = MediaStore.Files.getContentUri("external")
                     pathDirectory = Environment.DIRECTORY_DOCUMENTS
-                    mimeType = MimeTypeEnum.DOC.value
+                    mimeType = "application/pdf"
                 }
             }
             if (mimeType != null && mediaUri != null) {

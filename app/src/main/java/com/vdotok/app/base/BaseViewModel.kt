@@ -8,6 +8,7 @@ import android.media.projection.MediaProjectionManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vdotok.app.R
 import com.vdotok.app.dao.CallHistoryDao
 import com.vdotok.app.dao.UserDao
@@ -177,6 +178,13 @@ BaseViewModel @Inject constructor() : ViewModel() {
                     callParams?.sessionUUID = it1
                     appManager.setSession(SessionType.CALL, callParams!!)
                 }
+                insertCallHistory(
+                    callParams,
+                    participantsID,
+                    resourcesProvider.getString(R.string.status_outgoing_call),
+                    true,
+                    callTitle
+                )
             }
         else {
             callParams = getSingleSessionParams(
@@ -190,6 +198,13 @@ BaseViewModel @Inject constructor() : ViewModel() {
                 callParams?.sessionUUID = it1
                 appManager.setSession(SessionType.SCREEN, callParams!!)
             }
+            insertCallHistory(
+                callParams,
+                participantsID,
+                resourcesProvider.getString(R.string.status_outgoing_call),
+                true,
+                callTitle
+            )
         }
         if (toRefIDs.size > 1 || callParams?.isBroadcast == 1) {
             participantsID = null
@@ -198,14 +213,13 @@ BaseViewModel @Inject constructor() : ViewModel() {
                 participantsID = it
             }
         }
-        insertCallHistory(
-            callParams,
-            participantsID,
-            resourcesProvider.getString(R.string.status_outgoing_call),
-            true,
-            callTitle
-        )
-        activity?.startActivity(CallActivity.createCallActivity(activity))
+
+        if (this::groupModel.isInitialized) {
+            activity?.startActivity(CallActivity.createCallActivityV2(activity, groupModel))
+        } else {
+            activity?.startActivity(CallActivity.createCallActivity(activity))
+        }
+
     }
 
     fun setupMultiSessionData(
@@ -224,6 +238,13 @@ BaseViewModel @Inject constructor() : ViewModel() {
         callParams?.sessionUUID = sessionIds.first
         callParams?.associatedSessionUUID = sessionIds.second
         appManager.setSession(SessionType.CALL, callParams!!)
+        insertCallHistory(
+            callParams,
+            participantsID,
+            resourcesProvider.getString(R.string.status_outgoing_call),
+            true,
+            callTitle
+        )
         val screenParams =
             getMultiSessionParams(
                 SessionType.SCREEN,
@@ -236,6 +257,13 @@ BaseViewModel @Inject constructor() : ViewModel() {
         screenParams.sessionUUID = sessionIds.second
         screenParams.associatedSessionUUID = sessionIds.first
         appManager.setSession(SessionType.SCREEN, screenParams)
+        insertCallHistory(
+            screenParams,
+            participantsID,
+            resourcesProvider.getString(R.string.status_outgoing_call),
+            true,
+            callTitle
+        )
     }
 
     fun insertCallHistory(
@@ -348,6 +376,15 @@ BaseViewModel @Inject constructor() : ViewModel() {
         CoroutineScope(Dispatchers.IO).launch {
             appDatabase.clearAllTables()
         }
+    }
+
+    fun getRefIDs(): java.util.ArrayList<String> {
+        val refIdList = java.util.ArrayList<String>()
+        groupModel.participants.forEach { participant ->
+            if (participant.refID != getOwnRefID())
+                participant.refID?.let { refIdList.add(it) }
+        }
+        return refIdList
     }
 
 

@@ -91,7 +91,6 @@ class AppManager(val context: Context) {
 
     var isCallSDKsReconnect = false
 
-
     /**
      * Defines callbacks for service binding, passed to bindService()
      */

@@ -72,8 +72,8 @@ class SelectUserContactAdapter(var context: Context,
         }
     }
     private fun setInitials(fullName: String?): String? {
-        val name :String? = fullName?.substring(0, 1)
-        return name
+            val name :String? = fullName?.substring(0, 1)
+            return name
     }
 
     private fun setCreateGroupUserListing(
