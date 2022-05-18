@@ -63,7 +63,8 @@ class CallActivity : BaseActivity<ActivityCallBinding, CallViewModel>() {
                 true,
                 viewModel.getRefIDs(),
                 viewModel.groupModel.groupTitle.toString(),
-                viewModel.groupModel.autoCreated
+                viewModel.groupModel.autoCreated,
+                null
             )
         }?: kotlin.run {
 //            this is public broadcast case from GroupListingFragment
@@ -72,7 +73,8 @@ class CallActivity : BaseActivity<ActivityCallBinding, CallViewModel>() {
                 false,
                 arrayListOf(),
                 resources.getString(R.string.public_broadcast),
-                0
+                0,
+                null
             )
         }
     }

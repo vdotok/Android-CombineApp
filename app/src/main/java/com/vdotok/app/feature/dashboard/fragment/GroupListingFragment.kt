@@ -194,7 +194,8 @@ class GroupListingFragment : BaseFragment<FragmentGroupListingBinding, Dashboard
             sessionIds, false,
             arrayListOf(),
             "Public Broadcast",
-            null
+            null,
+            activity
         )
     }
 

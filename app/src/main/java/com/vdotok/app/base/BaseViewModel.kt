@@ -8,7 +8,6 @@ import android.media.projection.MediaProjectionManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vdotok.app.R
 import com.vdotok.app.dao.CallHistoryDao
 import com.vdotok.app.dao.UserDao
@@ -213,13 +212,16 @@ BaseViewModel @Inject constructor() : ViewModel() {
                 participantsID = it
             }
         }
+        if (appManager.isCamEnableInMultiCast && appManager.isSSEnableInMultiCast) {
+            return
+        }else{
+            if (this::groupModel.isInitialized) {
+                activity?.startActivity(CallActivity.createCallActivityV2(activity, groupModel))
+            } else {
+                activity?.startActivity(CallActivity.createCallActivity(activity))
+            }
 
-        if (this::groupModel.isInitialized) {
-            activity?.startActivity(CallActivity.createCallActivityV2(activity, groupModel))
-        } else {
-            activity?.startActivity(CallActivity.createCallActivity(activity))
         }
-
     }
 
     fun setupMultiSessionData(
@@ -227,7 +229,8 @@ BaseViewModel @Inject constructor() : ViewModel() {
         isGroupBroadcast: Boolean,
         toRefIDs: ArrayList<String>,
         callTitle: String,
-        autoCreated: Int?
+        autoCreated: Int?,
+        activity: Activity?
     ) {
         callParams = getMultiSessionParams(
             SessionType.CALL,
@@ -264,6 +267,12 @@ BaseViewModel @Inject constructor() : ViewModel() {
             true,
             callTitle
         )
+        if (this::groupModel.isInitialized) {
+            activity?.startActivity(CallActivity.createCallActivityV2(activity, groupModel))
+        } else {
+            activity?.startActivity(CallActivity.createCallActivity(activity))
+        }
+
     }
 
     fun insertCallHistory(

@@ -239,7 +239,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
             true,
             getRefIDs(),
             viewModel.groupModel.groupTitle.toString(),
-            viewModel.groupModel.autoCreated
+            viewModel.groupModel.autoCreated,
+            activity
         )
     }
 
