@@ -233,6 +233,7 @@ class AppManager(val context: Context) {
                     Log.e("CallStatus", "appManager" + callInfoResponse.callStatus.value)
                     notifyCallStatus(callInfoResponse)
                     when (callInfoResponse.callStatus) {
+                        CallStatus.NO_SESSION_EXISTS,
                         CallStatus.OUTGOING_CALL_ENDED -> {
                             callInfoResponse.callParams?.apply {
                                 for (value in activeSession.values) {
@@ -260,7 +261,7 @@ class AppManager(val context: Context) {
                         else -> {
                         }
                     }
-                }, 500)
+                }, 1000)
             }
 
             override fun connectionStatus(enumConnectionStatus: EnumConnectionStatus) {

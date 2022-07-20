@@ -169,8 +169,13 @@ class InOutCallFragment : BaseFragment<FragmentCallBinding, CallViewModel>() {
                 }
             }
             CallStatus.CALL_CONNECTED -> {
-                Navigation.findNavController(binding.root)
-                    .navigate(R.id.action_move_to_connect_call)
+                try {
+                    Navigation.findNavController(binding.root)
+                        .navigate(R.id.action_move_to_connect_call)
+                }catch (ex:Exception){
+                    Log.w("CallNavigation","Failed to navigate")
+                }
+
             }
             CallStatus.CALL_MISSED -> {
                 callInfoResponse.callParams?.let { callParams ->
@@ -180,6 +185,7 @@ class InOutCallFragment : BaseFragment<FragmentCallBinding, CallViewModel>() {
                     updateMessageAndFinishActivity("Call Missed")
                 }
             }
+            CallStatus.NO_SESSION_EXISTS,
             CallStatus.OUTGOING_CALL_ENDED -> {
                 callInfoResponse.callParams?.sessionType?.let {
                     updateMessageAndFinishActivity(callInfoResponse.responseMessage.toString())

@@ -513,15 +513,6 @@ class GroupListingFragment : BaseFragment<FragmentGroupListingBinding, Dashboard
         super.onFileReceivedCompleted(headerModel, byteArray, msgId)
         viewModel.groupModel = groupDataList.find { it.channelName == headerModel.topic }!!
         checkForStoragePermissions(msgId, headerModel, byteArray)
-        chatUtils.checkAndroidVersionToSave(headerModel, byteArray) {
-            chatUtils.sendAttachmentMessage(
-                this::onNewMessage,
-                headerModel,
-                chatUtils.file,
-                msgId,
-                viewModel.groupModel
-            )
-        }
     }
 
     private fun checkForStoragePermissions(

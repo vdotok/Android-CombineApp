@@ -8,10 +8,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.projection.MediaProjection
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.CountDownTimer
-import android.os.Environment
+import android.os.*
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +17,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import com.vdotok.app.R
 import com.vdotok.app.base.BaseFragment
 import com.vdotok.app.constants.directoryName
@@ -47,6 +45,7 @@ import com.vdotok.app.utils.converFileToByteArray
 import com.vdotok.app.utils.getFileData
 import com.vdotok.app.utils.getMimeType
 import com.vdotok.connect.models.*
+import com.vdotok.connect.models.Message
 import com.vdotok.connect.utils.ImageUtils
 import com.vdotok.connect.utils.ImageUtils.copyFileToInternalStorage
 import com.vdotok.connect.utils.ImageUtils.encodeToBase64
@@ -65,6 +64,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
 
     override val getLayoutRes: Int = R.layout.fragment_chat
     override val getViewModel: Class<ChatViewModel> = ChatViewModel::class.java
+    var chatLiveData = MutableLiveData<ArrayList<Message>>()
 
     private var timer: CountDownTimer? = null
     private var broadcastOptionsFragment: BroadcastOptionsFragment? = null
@@ -92,9 +92,12 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
     }
 
     private fun getChatData() {
-        CoroutineScope(IO).launch {
-            adapter.updateData(ArrayList(viewModel.getChatData(viewModel.groupModel.id)))
+        chatLiveData.observe(this.viewLifecycleOwner) { chatData ->
+            adapter.updateData(chatData)
             scrollToLast()
+        }
+        CoroutineScope(IO).launch() {
+            chatLiveData.postValue(ArrayList(viewModel.getChatData(viewModel.groupModel.id)))
         }
     }
 
@@ -350,7 +353,9 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
         adapter.setHasStableIds(true)
         binding.rcvMsgList.adapter = adapter
         binding.rcvMsgList.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom -> if (bottom < oldBottom) scrollToLast() }
-        scrollToLast()
+        Handler(Looper.getMainLooper()).postDelayed({
+            scrollToLast()
+        },1000)
     }
 
     /**
@@ -703,15 +708,25 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
                 startForResultDocument.launch(intent)
             }
             else -> {
-                for (values in viewModel.appManager.activeSession.values) {
-                    if (values.associatedSessionUUID.isEmpty()) {
-                        if (values.mediaType == com.vdotok.streaming.enums.MediaType.VIDEO && values.sessionType == SessionType.CALL) {
-                            Toast.makeText(context, "Camera cannot be used", Toast.LENGTH_SHORT).show() }
-                        else {
-                            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                            startForResultCamera.launch(intent) }
-                    } else {
-                        Toast.makeText(context, "Camera cannot be used", Toast.LENGTH_SHORT).show()}
+                val sessionValue = viewModel.appManager.activeSession
+                if (!sessionValue.isEmpty()) {
+                    for (values in sessionValue.values) {
+                        if (values.associatedSessionUUID.isEmpty()) {
+                            if (values.mediaType == com.vdotok.streaming.enums.MediaType.VIDEO && values.sessionType == SessionType.CALL) {
+                                Toast.makeText(context, "Camera cannot be used", Toast.LENGTH_SHORT)
+                                    .show()
+                            } else {
+                                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                                startForResultCamera.launch(intent)
+                            }
+                        } else {
+                            Toast.makeText(context, "Camera cannot be used", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
+                } else {
+                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    startForResultCamera.launch(intent)
                 }
             }
         }
