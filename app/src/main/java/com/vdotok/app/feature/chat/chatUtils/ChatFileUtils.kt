@@ -9,7 +9,6 @@ import android.os.Environment
 import android.provider.MediaStore
 import androidx.core.net.toUri
 import com.vdotok.app.constants.directoryName
-import com.vdotok.app.feature.chat.enums.MimeTypeEnum
 import com.vdotok.app.manager.AppManager
 import com.vdotok.app.utils.createAppDirectory
 import com.vdotok.app.utils.getBitmap
@@ -121,7 +120,7 @@ class ChatFileUtils(var context: Context, var appManager: AppManager) {
         groupModel: GroupModel
     ) {
         if (groupModel.channelName == headerModel.topic) {
-            groupModel.participants.size > 1
+            groupModel.participants!!.size > 1
             when (headerModel.type) {
                 MediaType.IMAGE.value -> {
                     message = makeImageItemModel(files, headerModel, groupModel, msgId)!!
@@ -182,7 +181,7 @@ class ChatFileUtils(var context: Context, var appManager: AppManager) {
                     MessageType.media,
                     base64String,
                     0f,
-                    isGroupMessage = groupModel.participants.size > 1,
+                    isGroupMessage = groupModel.participants!!.size > 1,
                     ReceiptType.SENT.value,
                     headerModel.type
                 )
@@ -205,7 +204,7 @@ class ChatFileUtils(var context: Context, var appManager: AppManager) {
                 MessageType.media,
                 it.toString(),
                 0f,
-                isGroupMessage = groupModel.participants.size > 1,
+                isGroupMessage = groupModel.participants!!.size > 1,
                 ReceiptType.SENT.value,
                 headerModel.type
             )

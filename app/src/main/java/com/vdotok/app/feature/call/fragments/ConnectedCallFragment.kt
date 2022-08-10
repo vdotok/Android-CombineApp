@@ -56,7 +56,6 @@ class ConnectedCallFragment : BaseFragment<FragmentCallConnectedBinding, CallVie
         binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
-
         defaultButtonStates()
         setCallData()
         setBinding()
@@ -466,6 +465,16 @@ class ConnectedCallFragment : BaseFragment<FragmentCallConnectedBinding, CallVie
                     finish()
                 }
 
+            }
+            CallStatus.CALL_MISSED -> {
+                callInfoResponse.callParams?.let { callParams ->
+                    viewModel.updateCallHistory(callParams.sessionUUID, getString(R.string.status_missed_call))
+                }
+                activity?.apply {
+                    viewModel.appManager.speakerState = false
+                    viewModel.appManager.countParticipant.set(0)
+                    finish()
+                }
             }
             else -> {
             }

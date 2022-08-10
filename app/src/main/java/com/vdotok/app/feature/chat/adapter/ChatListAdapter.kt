@@ -1,9 +1,12 @@
 package com.vdotok.app.feature.chat.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vdotok.app.R
 import com.vdotok.app.databinding.ItemMessageRowBinding
 import com.vdotok.app.feature.chat.clickListenerInterface.FileClickListener
@@ -20,6 +23,7 @@ class ChatListAdapter(
     private val callback: FileClickListener,
     val list: ArrayList<Message>,
     val chatViewModel: ChatViewModel,
+    val context: Context
 ) : RecyclerView.Adapter<ChatViewHolder>() {
     var items: ArrayList<Message> = ArrayList()
     var sendStatus: Boolean = false
@@ -57,8 +61,11 @@ class ChatListAdapter(
             MessageType.media -> {
                 when (data.subType) {
                     0 -> {
-                        holder.binding?.customImageTypeText?.imageTypeMessage?.setImageBitmap(
-                            ImageUtils.decodeBase64(data.content))
+//                        holder.binding?.customImageTypeText?.imageTypeMessage?.setImageBitmap(
+//                            ImageUtils.decodeBase64(data.content))
+                        Glide.with(context).load(data.content)
+                            .diskCacheStrategy(DiskCacheStrategy.DATA)
+                            .into(holder.binding?.customImageTypeText?.imageTypeMessage!!)
                         holder.binding?.customImageTypeText?.image?.performSingleClick {
                            callback.onFileClick()
                         }

@@ -3,9 +3,6 @@ package com.vdotok.app.feature.callHistory.viewmodel
 import androidx.lifecycle.LiveData
 import com.vdotok.app.base.BaseViewModel
 import com.vdotok.app.models.CallHistoryData
-import com.vdotok.app.models.CallHistoryDetails
-import com.vdotok.network.models.GroupModel
-import com.vdotok.network.models.UserModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

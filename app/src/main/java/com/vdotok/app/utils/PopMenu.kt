@@ -13,12 +13,12 @@ import com.vdotok.app.feature.callHistory.CallHistory
 import com.vdotok.app.feature.profile.ProfileActivity
 import java.lang.reflect.Method
 
-fun showPopMenu(context: Context, view: ImageView,viewModel: BaseViewModel){
+fun showPopMenu(context: Context, view: ImageView, logoutUser : () -> Unit){
     val popup = PopupMenu(context, view,R.style.MyPopupMenu)
     val inflater = popup.menuInflater
     inflater.inflate(R.menu.details_option_menu, popup.menu)
     popup.setOnMenuItemClickListener {item->
-        menuItemClick(item,context,viewModel)
+        menuItemClick(item,context, logoutUser)
         true
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -47,7 +47,11 @@ fun showPopMenu(context: Context, view: ImageView,viewModel: BaseViewModel){
     popup.show()
 }
 
-private fun menuItemClick(item: MenuItem?, context: Context, viewModel: BaseViewModel) {
+private fun menuItemClick(
+    item: MenuItem?,
+    context: Context,
+    logoutUser: () -> Unit
+) {
     when (item?.itemId) {
         R.id.profileOption -> {
             context.startActivity(ProfileActivity.createProfileActivity(context))
@@ -56,9 +60,10 @@ private fun menuItemClick(item: MenuItem?, context: Context, viewModel: BaseView
             context.startActivity(CallHistory.createCallHistoryActivity(context))
         }
         R.id.logoutOption -> {
-            viewModel.logout()
-            UserPreferences.clearUserData()
-            context.startActivity(AccountActivity.createAccountsActivity(context))
+            logoutUser.invoke()
+//            viewModel.logout()
+//            UserPreferences.clearUserData()
+//            context.startActivity(AccountActivity.createAccountsActivity(context))
         }
     }
 }

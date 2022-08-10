@@ -1,6 +1,8 @@
 package com.vdotok.app.feature.userlisting.fragment
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import com.vdotok.app.base.UserPreferences
 import com.vdotok.app.databinding.FragmentCreateGroupChatBinding
 import com.vdotok.app.extensions.ViewExtension.hideKeyboard
 import com.vdotok.app.extensions.ViewExtension.showSnackBar
+import com.vdotok.app.feature.account.AccountActivity
 import com.vdotok.app.feature.userlisting.AllUsersActivity
 import com.vdotok.app.feature.userlisting.adapter.SelectUserContactAdapter
 import com.vdotok.app.feature.userlisting.dialog.CreateGroupDialog
@@ -75,7 +78,7 @@ class CreateGroupChatFragment : BaseFragment<FragmentCreateGroupChatBinding, All
         }
 
         binding.customToolbar.optionMenu.performSingleClick {
-            context?.let { showPopMenu(it, binding.customToolbar.optionMenu, viewModel) }
+            context?.let { showPopMenu(it, binding.customToolbar.optionMenu, this::logoutUser) }
         }
 
         binding.customToolbar.imgDone.performSingleClick {
@@ -86,6 +89,15 @@ class CreateGroupChatFragment : BaseFragment<FragmentCreateGroupChatBinding, All
                 binding.root.showSnackBar(getString(R.string.no_user_select))
             }
         }
+    }
+
+    private fun logoutUser() {
+        showProgress(requireContext(), getString(R.string.logging_out))
+        Handler(Looper.getMainLooper()).postDelayed({
+            hideProgress()
+            viewModel.logout()
+            startActivity(AccountActivity.createAccountsActivity(requireContext()))
+        },3000)
     }
 
     private fun onCreateGroupClick() {

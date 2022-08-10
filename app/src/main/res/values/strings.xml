@@ -81,6 +81,7 @@
     <string name="loading_profile">Loading Profile!</string>
     <string name="loading_update_group_name">Updating group name!</string>
     <string name="loading_delete_group">Deleting Group!</string>
+    <string name="logging_out">Logging Out!</string>
 
     <!--    dashboard texts-->
     <string name="title_chat_rooms">Chat Rooms</string>

@@ -23,8 +23,9 @@ import com.vdotok.app.utils.ValidationUtils.checkUserName
 import com.vdotok.app.utils.ViewUtils.performSingleClick
 import com.vdotok.network.models.LoginResponse
 import com.vdotok.network.models.SignUpModel
-import com.vdotok.network.network.*
+import com.vdotok.network.network.HttpResponseCodes
 import com.vdotok.network.network.NetworkConnectivity.isInternetAvailable
+import com.vdotok.network.network.Result
 
 class SignupFragment : BaseFragment<FragmentSignupBinding, AccountViewModel>() {
 

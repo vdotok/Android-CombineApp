@@ -4,8 +4,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.media.projection.MediaProjection
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
 import android.view.View
@@ -19,13 +17,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.norgic.spotsdialog.SpotsDialog
 import com.vdotok.app.R
 import com.vdotok.app.databinding.ActivityBaseBinding
-import com.vdotok.app.extensions.ViewExtension.invisible
-import com.vdotok.app.extensions.ViewExtension.show
 import com.vdotok.app.feature.call.CallActivity
 import com.vdotok.app.interfaces.CallBackManager
 import com.vdotok.app.models.ActiveSession
 import com.vdotok.app.uielements.CustomCallView
-import com.vdotok.app.utils.Utils
 import com.vdotok.app.utils.ViewUtils.performSingleClick
 import com.vdotok.connect.models.Presence
 import com.vdotok.network.network.NetworkConnectivity
@@ -35,7 +30,6 @@ import com.vdotok.streaming.commands.RegisterResponse
 import com.vdotok.streaming.enums.*
 import com.vdotok.streaming.models.*
 import org.webrtc.VideoTrack
-import java.util.*
 
 
 abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity(),

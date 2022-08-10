@@ -389,7 +389,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
 
     fun getRefIDs(): java.util.ArrayList<String> {
         val refIdList = java.util.ArrayList<String>()
-        groupModel.participants.forEach { participant ->
+        groupModel.participants?.forEach { participant ->
             if (participant.refID != getOwnRefID())
                 participant.refID?.let { refIdList.add(it) }
         }

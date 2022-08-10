@@ -64,7 +64,6 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
 
     override val getLayoutRes: Int = R.layout.fragment_chat
     override val getViewModel: Class<ChatViewModel> = ChatViewModel::class.java
-    var chatLiveData = MutableLiveData<ArrayList<Message>>()
 
     private var timer: CountDownTimer? = null
     private var broadcastOptionsFragment: BroadcastOptionsFragment? = null
@@ -72,6 +71,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
 
     private lateinit var adapter: ChatListAdapter
     private lateinit var chatUtils: ChatFileUtils
+    var chatLiveData = MutableLiveData<ArrayList<Message>>()
 
     var file: File? = null
     private var fileType = 0
@@ -249,7 +249,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
 
     private fun getRefIDs(): ArrayList<String> {
         val refIdList = ArrayList<String>()
-        viewModel.groupModel.participants.forEach { participant ->
+        viewModel.groupModel.participants?.forEach { participant ->
             if (participant.refID != viewModel.getOwnRefID())
                 participant.refID?.let { refIdList.add(it) }
         }
@@ -348,14 +348,14 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
      */
     private fun initChatListAdapter() {
         activity?.applicationContext?.let {
-            adapter = ChatListAdapter(this, ArrayList(), viewModel)
+            adapter = ChatListAdapter(this, ArrayList(), viewModel, requireContext())
         }
         adapter.setHasStableIds(true)
         binding.rcvMsgList.adapter = adapter
         binding.rcvMsgList.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom -> if (bottom < oldBottom) scrollToLast() }
         Handler(Looper.getMainLooper()).postDelayed({
             scrollToLast()
-        },1000)
+        }, 1000)
     }
 
     /**
@@ -484,7 +484,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
                     MessageType.media,
                     encodeToBase64(it),
                     0f,
-                    isGroupMessage = viewModel.groupModel.participants.size > 1
+                    isGroupMessage = viewModel.groupModel.participants!!.size > 1
                 )
             }
             if (model != null) {
@@ -549,6 +549,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
 
     private fun insertDBData(message: Message) {
         chatUtils.file?.let { file ->
+            var chatModel: Message = message
+            chatModel.content = file.absolutePath
             viewModel.insertChatModel(message, viewModel.groupModel.id, file.absolutePath)
             chatUtils.file = null
         } ?: kotlin.run {
@@ -627,7 +629,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
                 MessageType.typing,
                 content,
                 0f,
-                isGroupMessage = viewModel.groupModel.participants.size > 1
+                isGroupMessage = viewModel.groupModel.participants!!.size > 1
             )
             viewModel.appManager.getChatClient()
                 ?.sendTypingMessage(chatModel, chatModel.key, chatModel.to)
@@ -649,7 +651,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
                     MessageType.text,
                     message.trim(),
                     0f,
-                    isGroupMessage = viewModel.groupModel.participants.size > 1,
+                    isGroupMessage = viewModel.groupModel.participants!!.size > 1,
                     ReceiptType.SENT.value
                 )
             }
@@ -708,25 +710,18 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
                 startForResultDocument.launch(intent)
             }
             else -> {
-                val sessionValue = viewModel.appManager.activeSession
-                if (!sessionValue.isEmpty()) {
-                    for (values in sessionValue.values) {
-                        if (values.associatedSessionUUID.isEmpty()) {
-                            if (values.mediaType == com.vdotok.streaming.enums.MediaType.VIDEO && values.sessionType == SessionType.CALL) {
-                                Toast.makeText(context, "Camera cannot be used", Toast.LENGTH_SHORT)
-                                    .show()
-                            } else {
-                                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                                startForResultCamera.launch(intent)
-                            }
-                        } else {
+                for (values in viewModel.appManager.activeSession.values) {
+                    if (values.associatedSessionUUID.isEmpty()) {
+                        if (values.mediaType == com.vdotok.streaming.enums.MediaType.VIDEO && values.sessionType == SessionType.CALL) {
                             Toast.makeText(context, "Camera cannot be used", Toast.LENGTH_SHORT)
                                 .show()
+                        } else {
+                            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                            startForResultCamera.launch(intent)
                         }
+                    } else {
+                        Toast.makeText(context, "Camera cannot be used", Toast.LENGTH_SHORT).show()
                     }
-                } else {
-                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    startForResultCamera.launch(intent)
                 }
             }
         }
@@ -815,7 +810,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
         }
         data?.data?.let { uri ->
             val mimeType = getMimeType(requireContext(), uri)
-            when (mimeType?.substring( 0, mimeType.indexOf("/"))) {
+            when (mimeType?.substring(0, mimeType.indexOf("/"))) {
                 MimeTypeEnum.IMAGE.value -> {
                     val pathDirectory = Environment.DIRECTORY_PICTURES
                     val mediaUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -916,7 +911,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             activity?.applicationContext?.let { context ->
-                val byteArray = when (mimeType?.substring( 0, mimeType.indexOf("/"))) {
+                val byteArray = when (mimeType?.substring(0, mimeType.indexOf("/"))) {
                     MimeTypeEnum.IMAGE.value -> {
                         ImageUtils.convertImageToByte(context, Uri.parse(data?.data.toString()))
                     }

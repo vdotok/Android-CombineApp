@@ -1,20 +1,12 @@
 package com.vdotok.app.glide
 
 import okhttp3.OkHttpClient
-import java.lang.Exception
-import java.lang.RuntimeException
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
-import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
+import java.util.concurrent.TimeUnit
 import javax.net.ssl.*
-import java.util.concurrent.TimeUnit;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
 
 
 object UnsafeOkHttpClient {

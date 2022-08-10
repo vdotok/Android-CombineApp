@@ -27,6 +27,7 @@ import com.vdotok.streaming.CallClient
 import com.vdotok.streaming.commands.CallInfoResponse
 import com.vdotok.streaming.commands.RegisterResponse
 import com.vdotok.streaming.enums.CallStatus
+import com.vdotok.streaming.enums.CallType
 import com.vdotok.streaming.enums.EnumConnectionStatus
 import com.vdotok.streaming.enums.SessionType
 import com.vdotok.streaming.interfaces.CallSDKListener
@@ -36,8 +37,6 @@ import com.vdotok.streaming.models.SessionStateInfo
 import com.vdotok.streaming.models.Usage
 import org.webrtc.VideoTrack
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 /**
@@ -230,7 +229,7 @@ class AppManager(val context: Context) {
 
             override fun callStatus(callInfoResponse: CallInfoResponse) {
                 Handler(Looper.getMainLooper()).postDelayed({
-                    Log.e("CallStatus", "appManager" + callInfoResponse.callStatus.value)
+                    Log.e("Session_invite", "appManager" + callInfoResponse.callStatus.value)
                     notifyCallStatus(callInfoResponse)
                     when (callInfoResponse.callStatus) {
                         CallStatus.NO_SESSION_EXISTS,
@@ -250,12 +249,21 @@ class AppManager(val context: Context) {
                             }
                         }
                         CallStatus.CALL_REJECTED -> {
-                            callInfoResponse.callParams?.let {
-                                removeSession(it.sessionType)
-                                removeVideoViews(it.refId, it.sessionUUID)
+                            callInfoResponse.callParams?.let { params ->
+                                if (params.callType != CallType.MANY_TO_MANY && params.callType != CallType.ONE_TO_MANY) {
+                                    removeSession(params.sessionType)
+                                    removeVideoViews(params.refId, params.sessionUUID)
+                                }
                             }
                         }
                         CallStatus.INSUFFICIENT_BALANCE -> {
+                            isTimerRunning.set(false)
+                        }
+                        CallStatus.CALL_MISSED -> {
+                            callInfoResponse.callParams?.let {
+                                removeSessionBySessionId(it.sessionUUID)
+                                removeVideoViews(it.refId, it.sessionUUID)
+                            }
                             isTimerRunning.set(false)
                         }
                         else -> {
@@ -542,9 +550,12 @@ class AppManager(val context: Context) {
         loginData.mediaServer?.let { mediaServerMap ->
             callClient?.connect(getMediaServerAddress(mediaServerMap), mediaServerMap.endPoint)
         }
+        connectChatSdk()
+    }
+
+    fun connectChatSdk() {
         chatClient?.setIsSenderReceiveFilePackets(true)
         chatClient?.connect(UserPreferences.messagingConnection as Connection)
-
     }
 
     fun reconnectCallSDKs(checkSessionsExist: Boolean) {
@@ -565,6 +576,10 @@ class AppManager(val context: Context) {
 
     fun removeSession(session: SessionType) {
         activeSession.remove(session)
+    }
+
+    fun removeSessionBySessionId(sessionId: String) {
+        activeSession.values.remove(CallParams(sessionUUID = sessionId))
     }
 
 

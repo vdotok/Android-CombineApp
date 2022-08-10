@@ -15,7 +15,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.vdotok.app.BuildConfig
 import com.vdotok.app.R
 import com.vdotok.app.databinding.FragmentBroadcastOptionsBinding
-import com.vdotok.app.extensions.ViewExtension.showSnackBar
 import com.vdotok.app.utils.DialogUtils
 import com.vdotok.app.utils.PermissionUtils
 import com.vdotok.app.utils.Utils.isInternalAudioAvailable

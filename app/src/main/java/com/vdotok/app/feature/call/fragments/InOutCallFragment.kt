@@ -142,7 +142,7 @@ class InOutCallFragment : BaseFragment<FragmentCallBinding, CallViewModel>() {
 
     override fun callStatus(callInfoResponse: CallInfoResponse) {
         super.callStatus(callInfoResponse)
-        Log.e("CallStatus", "InOutCallFragment" + callInfoResponse.callStatus.value)
+        Log.e("Session_invite", "InOutCallFragment" + callInfoResponse.callStatus.value)
         when (callInfoResponse.callStatus) {
             CallStatus.CALL_REJECTED -> {
                 if (isInitiator) {
@@ -153,7 +153,7 @@ class InOutCallFragment : BaseFragment<FragmentCallBinding, CallViewModel>() {
                                     val abc = viewModel.getNameFromRefID(callParams.refId)
                                     Toast.makeText(
                                         requireActivity(),
-                                        abc.fullName,
+                                        "${abc.fullName} rejected the call!",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
@@ -172,10 +172,9 @@ class InOutCallFragment : BaseFragment<FragmentCallBinding, CallViewModel>() {
                 try {
                     Navigation.findNavController(binding.root)
                         .navigate(R.id.action_move_to_connect_call)
-                }catch (ex:Exception){
+                }catch (ex :Exception){
                     Log.w("CallNavigation","Failed to navigate")
                 }
-
             }
             CallStatus.CALL_MISSED -> {
                 callInfoResponse.callParams?.let { callParams ->

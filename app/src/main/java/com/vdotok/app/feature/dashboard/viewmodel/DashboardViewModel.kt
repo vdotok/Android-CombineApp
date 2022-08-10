@@ -7,8 +7,6 @@ import com.vdotok.app.base.BaseViewModel
 import com.vdotok.app.base.UserPreferences.userData
 import com.vdotok.app.dao.ChatDao
 import com.vdotok.app.dao.GroupsDao
-import com.vdotok.app.dao.UserDao
-import com.vdotok.app.models.ChatModel
 import com.vdotok.app.models.ChatModel.Companion.toChatModel
 import com.vdotok.connect.models.Message
 import com.vdotok.connect.models.Presence

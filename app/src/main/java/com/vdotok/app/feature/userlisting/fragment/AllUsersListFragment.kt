@@ -1,6 +1,8 @@
 package com.vdotok.app.feature.userlisting.fragment
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,7 @@ import com.vdotok.app.R
 import com.vdotok.app.base.BaseFragment
 import com.vdotok.app.databinding.FragmentAllUsersListBinding
 import com.vdotok.app.extensions.ViewExtension.hideKeyboard
+import com.vdotok.app.feature.account.AccountActivity
 import com.vdotok.app.feature.call.CallActivity
 import com.vdotok.app.feature.userlisting.AllUsersActivity
 import com.vdotok.app.feature.userlisting.adapter.SelectUserContactAdapter
@@ -29,9 +32,6 @@ import com.vdotok.streaming.enums.CallType
 import com.vdotok.streaming.enums.MediaType
 import com.vdotok.streaming.enums.SessionType
 import com.vdotok.streaming.models.CallParams
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class AllUsersListFragment : BaseFragment<FragmentAllUsersListBinding, AllUsersViewModel>(),
@@ -83,7 +83,7 @@ class AllUsersListFragment : BaseFragment<FragmentAllUsersListBinding, AllUsersV
         }
 
         binding.customToolbar.optionMenu.performSingleClick {
-            context?.let { showPopMenu(it, binding.customToolbar.optionMenu, viewModel) }
+            context?.let { showPopMenu(it, binding.customToolbar.optionMenu, this::logoutUser) }
         }
 
         binding.tvAddGroupChat.setOnClickListener {
@@ -92,6 +92,15 @@ class AllUsersListFragment : BaseFragment<FragmentAllUsersListBinding, AllUsersV
             Navigation.findNavController(binding.root)
                 .navigate(R.id.action_move_to_create_group_users_list)
         }
+    }
+
+    private fun logoutUser() {
+        showProgress(requireContext(), getString(R.string.logging_out))
+        Handler(Looper.getMainLooper()).postDelayed({
+            hideProgress()
+            viewModel.logout()
+            startActivity(AccountActivity.createAccountsActivity(requireContext()))
+        },3000)
     }
 
     private fun initUserListAdapter() {

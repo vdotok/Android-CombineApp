@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.vdotok.app.base.BaseViewModel
 import com.vdotok.app.base.UserPreferences
 import com.vdotok.app.dao.ChatDao
-import com.vdotok.app.dao.GroupsDao
 import com.vdotok.app.models.ChatModel.Companion.toChatModel
 import com.vdotok.app.models.ChatModel.Companion.toMessageModel
 import com.vdotok.connect.models.HeaderModel
@@ -51,7 +50,7 @@ class ChatViewModel @Inject constructor(
      */
     fun getGroupName() {
         if (groupModel.autoCreated == 1) {
-            groupModel.participants.forEach { userName ->
+            groupModel.participants?.forEach { userName ->
                 if (!userName.fullname?.equals(getUserData().fullName)!!) {
                     groupTitle.set(userName.fullname)
                 }
@@ -99,7 +98,7 @@ class ChatViewModel @Inject constructor(
      * method to get other username
      */
     fun getUserName(model: Message): String {
-        val participants = groupModel.participants.find { it.refID == model.from }
+        val participants = groupModel.participants?.find { it.refID == model.from }
         return participants?.fullname.toString()
     }
 

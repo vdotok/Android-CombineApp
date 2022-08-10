@@ -13,7 +13,6 @@ import com.vdotok.app.databinding.ActivityDashboardBinding
 import com.vdotok.app.extensions.ViewExtension.showSnackBar
 import com.vdotok.app.feature.dashboard.viewmodel.DashboardViewModel
 import com.vdotok.network.models.LoginResponse
-import com.vdotok.network.models.UserModel
 import com.vdotok.network.network.NetworkConnectivity
 import com.vdotok.network.network.Result
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,6 +37,7 @@ class Dashboard : BaseActivity<ActivityDashboardBinding, DashboardViewModel>() {
     }
 
     private fun getRegister() {
+        viewModel.appManager.connectChatSdk()
         if (!viewModel.appManager.callSDKRegistrationStatus.get())
             viewModel.appManager.connect()
     }

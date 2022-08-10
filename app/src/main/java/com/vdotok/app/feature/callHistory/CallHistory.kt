@@ -9,9 +9,6 @@ import com.vdotok.app.base.BaseActivity
 import com.vdotok.app.databinding.ActivityCallHistoryBinding
 import com.vdotok.app.feature.callHistory.viewmodel.CallHistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CallHistory : BaseActivity<ActivityCallHistoryBinding, CallHistoryViewModel>() {

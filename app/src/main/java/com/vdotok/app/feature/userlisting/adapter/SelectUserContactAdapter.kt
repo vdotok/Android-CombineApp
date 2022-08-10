@@ -18,7 +18,6 @@ import com.vdotok.app.extensions.ViewExtension.showSnackBar
 import com.vdotok.app.feature.userlisting.interfaces.OnContactItemClickInterface
 import com.vdotok.network.models.UserModel
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class SelectUserContactAdapter(var context: Context,

@@ -23,6 +23,7 @@ import com.vdotok.app.base.BaseFragment
 import com.vdotok.app.base.UserPreferences
 import com.vdotok.app.databinding.FragmentGroupListingBinding
 import com.vdotok.app.extensions.ViewExtension.showSnackBar
+import com.vdotok.app.feature.account.AccountActivity
 import com.vdotok.app.feature.chat.ChatActivity.Companion.createChatActivity
 import com.vdotok.app.feature.chat.chatUtils.ChatFileUtils
 import com.vdotok.app.feature.chat.dialog.StoragePermissionDialog
@@ -37,7 +38,10 @@ import com.vdotok.app.utils.DialogUtils.showDeleteGroupAlert
 import com.vdotok.app.utils.ViewUtils.performSingleClick
 import com.vdotok.app.utils.showPopMenu
 import com.vdotok.connect.models.*
-import com.vdotok.network.models.*
+import com.vdotok.network.models.DeleteGroupModel
+import com.vdotok.network.models.GroupModel
+import com.vdotok.network.models.LoginResponse
+import com.vdotok.network.models.UpdateGroupNameModel
 import com.vdotok.network.network.NetworkConnectivity
 import com.vdotok.network.network.Result
 import kotlinx.coroutines.CoroutineScope
@@ -150,7 +154,7 @@ class GroupListingFragment : BaseFragment<FragmentGroupListingBinding, Dashboard
         }
 
         binding.customToolbar.optionMenu.performSingleClick {
-            context?.let { showPopMenu(it, binding.customToolbar.optionMenu, viewModel) }
+            context?.let { showPopMenu(it, binding.customToolbar.optionMenu, this::logoutUser) }
         }
 
         binding.customToolbar.imgDone.performSingleClick {
@@ -187,6 +191,17 @@ class GroupListingFragment : BaseFragment<FragmentGroupListingBinding, Dashboard
             )
 
         }
+    }
+
+
+    private fun logoutUser() {
+        if (subscriptionHandler != null) subscriptionHandler.removeCallbacks(subscriptionRunnable)
+        showProgress(requireContext(), getString(R.string.logging_out))
+        Handler(Looper.getMainLooper()).postDelayed({
+            hideProgress()
+            viewModel.logout()
+            startActivity(AccountActivity.createAccountsActivity(requireContext()))
+        },1500)
     }
 
     override fun multiSessionReady(sessionIds: Pair<String, String>) {
@@ -357,13 +372,17 @@ class GroupListingFragment : BaseFragment<FragmentGroupListingBinding, Dashboard
         }
     }
 
-    private fun doSubscribe() {
-        Handler(Looper.getMainLooper()).postDelayed({
+    private val subscriptionHandler = Handler(Looper.getMainLooper())
+    private val subscriptionRunnable =
+        Runnable {
             for (group in groupDataList) {
                 viewModel.appManager.getChatClient()
                     ?.subscribeTopic(group.channelKey, group.channelName)
             }
-        }, 2000)
+        }
+
+    private fun doSubscribe() {
+        subscriptionHandler.postDelayed(subscriptionRunnable, 2000)
 
         if (viewModel.appManager.userPresenceList.isNotEmpty()) {
             activity?.runOnUiThread {
@@ -454,10 +473,12 @@ class GroupListingFragment : BaseFragment<FragmentGroupListingBinding, Dashboard
                             }
                             is Result.Success -> {
                                 hideProgress()
+                                if (it.data.status == 200) {
 //                                delete group from DB
-                                deleteGroupModel.groupId?.let { it1 ->
-                                    viewModel.deleteChat(it1)
-                                    viewModel.deleteGroupData(it1)
+                                    deleteGroupModel.groupId?.let { it1 ->
+                                        viewModel.deleteChat(it1)
+                                        viewModel.deleteGroupData(it1)
+                                    }
                                 }
                                 binding.root.showSnackBar(it.data.message)
                             }
@@ -572,7 +593,7 @@ class GroupListingFragment : BaseFragment<FragmentGroupListingBinding, Dashboard
                     MessageType.text,
                     message.trim(),
                     0f,
-                    isGroupMessage = viewModel.groupModel.participants.size > 1,
+                    isGroupMessage = viewModel.groupModel.participants!!.size > 1,
                     ReceiptType.SENT.value
                 )
             }

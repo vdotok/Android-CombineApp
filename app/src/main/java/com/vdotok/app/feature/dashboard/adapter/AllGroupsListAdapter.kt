@@ -88,7 +88,7 @@ class AllGroupsListAdapter(
 
         model.let {
             if (model.autoCreated == 1) {
-                it.participants.forEach { name ->
+                it.participants?.forEach { name ->
                     if (name.fullname?.equals(username) == false) {
                         holder.binding?.groupTitle?.text = name.fullname
 
@@ -162,7 +162,7 @@ class AllGroupsListAdapter(
 
         var status = context.resources.getString(R.string.offline)
 
-        model.participants.forEach { participantList ->
+        model.participants?.forEach { participantList ->
 
             presenceList.let { list ->
                 list.forEach {
@@ -180,9 +180,9 @@ class AllGroupsListAdapter(
     private fun getOneToManyStatus(model: GroupModel): CharSequence {
 
         val tempList = ArrayList<String>()
-        val size = model.participants.size
+        val size = model.participants?.size
 
-        model.participants.forEach { participant ->
+        model.participants?.forEach { participant ->
             presenceList.let { list ->
                 list.forEach {
                     if (it.isOnline == 0 && it.username == participant.refID && tempList.contains(it.username)
