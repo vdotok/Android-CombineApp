@@ -15,5 +15,8 @@ import kotlinx.parcelize.Parcelize
 data class CheckUserModel (
 
     @SerializedName("email")
-    var email: String? = null
+    var email: String? = null,
+
+    @SerializedName("project_id")
+    var projectId: String
 ) : Parcelable
