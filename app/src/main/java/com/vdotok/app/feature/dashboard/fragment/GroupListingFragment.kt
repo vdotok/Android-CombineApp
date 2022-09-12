@@ -130,6 +130,11 @@ class GroupListingFragment : BaseFragment<FragmentGroupListingBinding, Dashboard
     private fun addPullToRefresh() {
         binding.swipeRefreshLay.isEnabled = true
         binding.swipeRefreshLay.setOnRefreshListener {
+            if (!viewModel.appManager.chatSDKStatus.get()) {
+                viewModel.appManager.connectChatSdk()
+            }
+            if (!viewModel.appManager.callSDKRegistrationStatus.get())
+                viewModel.appManager.connectCallSdk()
             getAllGroups()
 
         }

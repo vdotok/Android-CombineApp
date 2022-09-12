@@ -99,16 +99,19 @@ class ChatListAdapter(
     }
 
     fun updateMessageForReceipt(model: ReadReceiptModel) {
-        val item = items.first { it.id == model.messageId }
+        val item = items.firstOrNull { it.id == model.messageId }
         val position = items.indexOf(item)
-        if (model.receiptType == ReceiptType.SEEN.value) {
-            item.status = model.receiptType
-            item.readCount = item.readCount + 1
-            items[position] = item
-            chatViewModel.appManager.updateMessageMapData(item)
+
+        if(model.receiptType == ReceiptType.SEEN.value){
+            item?.status = model.receiptType
+            item?.readCount = item?.readCount?.plus(1) ?: 0
+
+            item?.let {
+                items[position] = item
+                chatViewModel.appManager.updateMessageMapData(it)
+            }
             notifyItemChanged(position)
         }
-
     }
 
     override fun getItemCount(): Int = items.size

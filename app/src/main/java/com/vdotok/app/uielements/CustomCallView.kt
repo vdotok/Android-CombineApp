@@ -38,6 +38,7 @@ class CustomCallView(context: Context, attrs: AttributeSet) :
         preview = findViewById(R.id.local_gl_surface_view)
         borderView = findViewById(R.id.borderView)
         preview.setMirror(false)
+        preview.holder.setKeepScreenOn(true)
         preview.init(rootEglBase.eglBaseContext, null)
         preview.setZOrderOnTop(true)
         preview.setZOrderMediaOverlay(true)

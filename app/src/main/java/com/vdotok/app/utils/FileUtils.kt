@@ -338,7 +338,7 @@ fun getMimeType(context: Context, uri: Uri): String? {
 //    val dest = File(sdMain, ApplicationConstants.CALL_LOGS_FILE_NAME + ".txt")
 //    try {
 //        // response is the data written to file
-////            PrintWriter(dest).use { out -> out.appendLine("Mango") }
+////            PrintWriter(dest).use { out -> out.appendLine("Test") }
 //        val gson = Gson()
 //        val callLogObject = gson.toJson(callLogs)
 //        dest.appendText("\nJSON:\n$callLogObject")

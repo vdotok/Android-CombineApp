@@ -39,7 +39,7 @@ class Dashboard : BaseActivity<ActivityDashboardBinding, DashboardViewModel>() {
     private fun getRegister() {
         viewModel.appManager.connectChatSdk()
         if (!viewModel.appManager.callSDKRegistrationStatus.get())
-            viewModel.appManager.connect()
+            viewModel.appManager.connectCallSdk()
     }
 
     private fun setBindingData() {

@@ -545,12 +545,11 @@ class AppManager(val context: Context) {
         handler.postDelayed(runnable, 1000)
     }
 
-    fun connect() {
+    fun connectCallSdk() {
         val loginData = UserPreferences.userData as LoginResponse
         loginData.mediaServer?.let { mediaServerMap ->
             callClient?.connect(getMediaServerAddress(mediaServerMap), mediaServerMap.endPoint)
         }
-        connectChatSdk()
     }
 
     fun connectChatSdk() {
