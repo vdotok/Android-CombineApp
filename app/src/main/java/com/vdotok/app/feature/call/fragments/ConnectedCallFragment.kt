@@ -190,10 +190,13 @@ class ConnectedCallFragment : BaseFragment<FragmentCallConnectedBinding, CallVie
         }
 
         binding.camOnOff.setOnClickListener {
-            if (viewModel.isCamEnable.get())
+            if (viewModel.isCamEnable.get()) {
                 viewModel.pauseCam()
-            else
+                viewModel.appManager.viewCam = false
+            } else {
                 viewModel.resumeCam()
+                viewModel.appManager.viewCam = true
+            }
         }
 
         binding.mute.setOnClickListener {

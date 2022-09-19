@@ -79,6 +79,7 @@ class AppManager(val context: Context) {
     var mBound = false
 
     var broadCastURL: String? = null
+    var viewCam :Boolean = true
 
     var tempHoldCallParams: CallParams? = null
     var speakerState = false

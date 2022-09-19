@@ -29,7 +29,11 @@ class VdoTok : Application() {
                 if (appManager.activeSession.size != 0) {
                     for (entry in appManager.activeSession.values) {
                         if (entry.mediaType == MediaType.VIDEO && entry.sessionType == SessionType.CALL){
-                          appManager.getCallClient()?.resumeVideo(appManager.getOwnRefID(),entry.sessionUUID)
+                            if (appManager.viewCam) {
+                                appManager.getCallClient()?.resumeVideo(appManager.getOwnRefID(), entry.sessionUUID)
+                            }else{
+                                appManager.getCallClient()?.pauseVideo(appManager.getOwnRefID(),entry.sessionUUID)
+                            }
                         }
                     }
                 }else{
