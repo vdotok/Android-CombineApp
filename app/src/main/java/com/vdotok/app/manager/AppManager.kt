@@ -468,7 +468,6 @@ class AppManager(val context: Context) {
             override fun onFileSendingStarted(fileHeaderId: String, fileType: Int) {
                 notifyFileSendStart(fileHeaderId, fileType)
 
-
             }
 
             override fun onMessageArrived(myMessage: Message) {
