@@ -77,7 +77,6 @@ class GroupListingFragment : BaseFragment<FragmentGroupListingBinding, Dashboard
         getAllGroups()
         setGroupDataObserver()
         addPullToRefresh()
-
         return mView
     }
 
@@ -632,7 +631,7 @@ class GroupListingFragment : BaseFragment<FragmentGroupListingBinding, Dashboard
     override fun onMessageArrive(message: Message) {
         super.onMessageArrive(message)
         viewModel.appManager.lastMessageGroupKey = message.key
-        if (message.from != viewModel.getOwnRefID()) {
+        if (message.from != viewModel.appManager.getOwnRefID()) {
             message.to.let {
                 viewModel.appManager.mapUnreadCount[it] =
                     viewModel.appManager.mapUnreadCount[it]?.plus(1) ?: 1

@@ -32,7 +32,7 @@ class CallViewModel @Inject constructor() : BaseViewModel() {
 
     fun pauseCam() {
         appManager.activeSession[SessionType.CALL]?.sessionUUID?.apply {
-            appManager.getCallClient()?.pauseVideo(getOwnRefID(), this)
+            appManager.getCallClient()?.pauseVideo(appManager.getOwnRefID(), this)
             isCamEnable.set(false)
             updateLocalViewOnVideoPauseResume(true)
         }
@@ -40,7 +40,7 @@ class CallViewModel @Inject constructor() : BaseViewModel() {
 
     fun resumeCam() {
         appManager.activeSession[SessionType.CALL]?.sessionUUID?.apply {
-            appManager.getCallClient()?.resumeVideo(getOwnRefID(), this)
+            appManager.getCallClient()?.resumeVideo(appManager.getOwnRefID(), this)
             isCamEnable.set(true)
             updateLocalViewOnVideoPauseResume(false)
         }
@@ -48,21 +48,21 @@ class CallViewModel @Inject constructor() : BaseViewModel() {
 
     fun pauseScreen() {
         appManager.activeSession[SessionType.SCREEN]?.sessionUUID?.apply {
-            appManager.getCallClient()?.pauseVideo(getOwnRefID(), this)
+            appManager.getCallClient()?.pauseVideo(appManager.getOwnRefID(), this)
             isScreenEnable.set(false)
         }
     }
 
     fun resumeScreen() {
         appManager.activeSession[SessionType.SCREEN]?.sessionUUID?.apply {
-            appManager.getCallClient()?.resumeVideo(getOwnRefID(), this)
+            appManager.getCallClient()?.resumeVideo(appManager.getOwnRefID(), this)
             isScreenEnable.set(true)
         }
     }
 
     private fun updateLocalViewOnVideoPauseResume(isShown: Boolean) {
         appManager.videoViews.forEach {
-            if (it.refID == getOwnRefID()) {
+            if (it.refID == appManager.getOwnRefID()) {
                 it.viewRenderer?.showHideAvatar(isShown)
                 it.isCamPaused = isShown
             }
@@ -71,7 +71,7 @@ class CallViewModel @Inject constructor() : BaseViewModel() {
 
     private fun updateLocalViewOnAudioMuteAndUnmute(isMute: Boolean) {
         appManager.videoViews.forEach {
-            if (it.refID == getOwnRefID()) {
+            if (it.refID == appManager.getOwnRefID()) {
                 it.viewRenderer?.showHideMuteIcon(isMute)
                 it.isMuted = isMute
             }
@@ -80,7 +80,7 @@ class CallViewModel @Inject constructor() : BaseViewModel() {
 
     fun muteMic() {
         appManager.activeSession[SessionType.CALL]?.sessionUUID?.apply {
-            appManager.getCallClient()?.muteUnMuteMic(getOwnRefID(), this)
+            appManager.getCallClient()?.muteUnMuteMic(appManager.getOwnRefID(), this)
             appManager.getCallClient()?.isAudioEnabled(this)?.let {
                 isMicEnable.set(it)
                 updateLocalViewOnAudioMuteAndUnmute(!it)
@@ -90,14 +90,14 @@ class CallViewModel @Inject constructor() : BaseViewModel() {
 
     fun muteScreenAppAudio() {
         appManager.activeSession[SessionType.SCREEN]?.sessionUUID?.apply {
-            appManager.getCallClient()?.muteUnMuteMic(getOwnRefID(), this)
+            appManager.getCallClient()?.muteUnMuteMic(appManager.getOwnRefID(), this)
             appManager.getCallClient()?.isAudioEnabled(this)?.let { isAppAudioEnable.set(it) }
         }
     }
 
     fun muteScreenMicAudio() {
         appManager.activeSession[SessionType.SCREEN]?.sessionUUID?.apply {
-            appManager.getCallClient()?.muteUnMuteMic(getOwnRefID(), this)
+            appManager.getCallClient()?.muteUnMuteMic(appManager.getOwnRefID(), this)
             appManager.getCallClient()?.isAudioEnabled(this)?.let { isMicEnable.set(it) }
         }
     }
@@ -155,7 +155,7 @@ class CallViewModel @Inject constructor() : BaseViewModel() {
     }
 
     fun acceptIncomingCall(callParams: CallParams) {
-        val session = appManager.getCallClient()?.acceptIncomingCall(getOwnRefID(), callParams)
+        val session = appManager.getCallClient()?.acceptIncomingCall(appManager.getOwnRefID(), callParams)
         session?.let { it1 ->
             callParams.sessionUUID = it1
             appManager.setSession(callParams.sessionType, callParams)

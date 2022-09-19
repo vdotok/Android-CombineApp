@@ -232,7 +232,7 @@ class InOutCallFragment : BaseFragment<FragmentCallBinding, CallViewModel>() {
 
     private fun removeLocalView() {
         viewModel.appManager.videoViews.forEach {
-            if (it.refID == viewModel.getOwnRefID()) {
+            if (it.refID == viewModel.appManager.getOwnRefID()) {
                 it.videoTrack.removeSink(it.viewRenderer?.preview)
                 it.viewRenderer = null
             }

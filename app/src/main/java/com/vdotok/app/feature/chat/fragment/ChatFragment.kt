@@ -10,6 +10,7 @@ import android.media.projection.MediaProjection
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -250,7 +251,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
     private fun getRefIDs(): ArrayList<String> {
         val refIdList = ArrayList<String>()
         viewModel.groupModel.participants?.forEach { participant ->
-            if (participant.refID != viewModel.getOwnRefID())
+            if (participant.refID != viewModel.appManager.getOwnRefID())
                 participant.refID?.let { refIdList.add(it) }
         }
         return refIdList
@@ -282,7 +283,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
         autoCreated: Int?
     ) {
         val callParams = CallParams(
-            refId = viewModel.getOwnRefID(),
+            refId = viewModel.appManager.getOwnRefID(),
             toRefIds = refIds,
             isInitiator = false,
             isBroadcast = 0,
@@ -507,7 +508,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), FileCli
     override fun onMessageArrive(message: Message) {
         super.onMessageArrive(message)
         viewModel.appManager.lastMessageGroupKey = message.key
-        if (message.from != viewModel.getOwnRefID()) {
+        if (message.from != viewModel.appManager.getOwnRefID()) {
             message.to.let {
                 viewModel.appManager.mapUnreadCount[it] =
                     viewModel.appManager.mapUnreadCount[it]?.plus(1) ?: 1

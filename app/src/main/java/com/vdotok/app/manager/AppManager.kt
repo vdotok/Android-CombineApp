@@ -57,7 +57,6 @@ class AppManager(val context: Context) {
     val chatSDKStatus: ObservableBoolean = ObservableBoolean(false)
     val isTimerRunning: ObservableBoolean = ObservableBoolean(false)
     var countParticipant: ObservableInt = ObservableInt(0)
-
     val listeners: ArrayList<CallBackManager> = ArrayList()
 
     val activeSession: HashMap<SessionType, CallParams> = HashMap()
@@ -118,6 +117,14 @@ class AppManager(val context: Context) {
             chatClient = it
         }
         setSDKsListener()
+    }
+
+
+    fun getOwnRefID(): String {
+        val userData = UserPreferences.userData as LoginResponse
+        return userData.refId ?: kotlin.run {
+            "Not Available"
+        }
     }
 
     fun acceptSecondCallIfAny() {

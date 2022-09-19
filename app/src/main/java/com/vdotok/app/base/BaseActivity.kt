@@ -212,7 +212,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     override fun onLocalCamera(stream: VideoTrack) {
         viewModel.appManager.videoViews.add(
             ActiveSession(
-                refID = viewModel.getOwnRefID(),
+                refID = viewModel.appManager.getOwnRefID(),
                 sessionID = "ownRefID",
                 videoTrack = stream,
                 null
@@ -249,7 +249,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     }
 
     override fun sendCurrentDataUsage(sessionKey: String, usage: Usage) {
-        viewModel.getOwnRefID().let { refId ->
+        viewModel.appManager.getOwnRefID().let { refId ->
             Log.e(
                 "StatsLogger",
                 "currentSentUsage: ${usage.currentSentBytes}, currentReceivedUsage: ${usage.currentReceivedBytes}"
@@ -266,7 +266,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
     }
 
     override fun sendEndDataUsage(sessionKey: String, sessionDataModel: SessionDataModel) {
-        viewModel.getOwnRefID().let { refId ->
+        viewModel.appManager.getOwnRefID().let { refId ->
             Log.e("StatsLogger", "sessionData: $sessionDataModel")
             viewModel.appManager.getCallClient()?.sendEndCallLogs(
                 refId = refId,

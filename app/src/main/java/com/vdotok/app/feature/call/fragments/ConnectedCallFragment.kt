@@ -170,6 +170,7 @@ class ConnectedCallFragment : BaseFragment<FragmentCallConnectedBinding, CallVie
 
     private fun setListeners() {
         binding.endCall.setOnClickListener {
+            if (viewModel.isMicEnable.get().not()) viewModel.muteMic()
             viewModel.endCall()
             binding.videoViewFull.release()
         }

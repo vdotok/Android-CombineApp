@@ -195,7 +195,7 @@ class AllUsersListFragment : BaseFragment<FragmentAllUsersListBinding, AllUsersV
            participantsId = it
         }
         val callParams = CallParams(
-            refId = viewModel.getOwnRefID(),
+            refId = viewModel.appManager.getOwnRefID(),
             toRefIds = refIds,
             isInitiator = true,
             isBroadcast = 0,

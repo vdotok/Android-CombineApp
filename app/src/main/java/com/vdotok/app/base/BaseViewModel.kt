@@ -60,13 +60,6 @@ BaseViewModel @Inject constructor() : ViewModel() {
     @Inject
     lateinit var resourcesProvider: ResourcesProvider
 
-    fun getOwnRefID(): String {
-        val userData = UserPreferences.userData as LoginResponse
-        return userData.refId ?: kotlin.run {
-            "Not Available"
-        }
-    }
-
     fun getOwnUsername(): String {
         val userData = UserPreferences.userData as LoginResponse
         return userData.fullName ?: kotlin.run {
@@ -98,7 +91,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
     }
 
     fun rejectCall(sessionId: String) {
-        appManager.getCallClient()?.rejectIncomingCall(getOwnRefID(), sessionId)
+        appManager.getCallClient()?.rejectIncomingCall(appManager.getOwnRefID(), sessionId)
         appManager.tempHoldCallParams = null
     }
 
@@ -107,7 +100,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
             (UserPreferences.userData as LoginResponse).authorizationToken?.let {
                 appManager.getCallClient()?.register(
                     authToken = it,
-                    refId = getOwnRefID(),
+                    refId = appManager.getOwnRefID(),
                     reconnectStatus = reconnectStatus
                 )
             }
@@ -120,13 +113,13 @@ BaseViewModel @Inject constructor() : ViewModel() {
     fun sendAcknowledgeMsgToGroup(myMessage: Message) {
         if (myMessage.status != ReceiptType.SEEN.value) myMessage.status =
             ReceiptType.DELIVERED.value
-        if (myMessage.from != getOwnRefID()) {
+        if (myMessage.from != appManager.getOwnRefID()) {
             val receipt = ReadReceiptModel(
                 myMessage.status,
                 myMessage.key,
                 System.currentTimeMillis(),
                 myMessage.id,
-                getOwnRefID(),
+                appManager.getOwnRefID(),
                 myMessage.to
             )
 
@@ -326,7 +319,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
         autoCreated: String
     ): CallParams {
         return CallParams(
-            refId = getOwnRefID(),
+            refId = appManager.getOwnRefID(),
             toRefIds = toRefIDs,
             callType = CallType.ONE_TO_MANY,
             sessionType = sessionType,
@@ -347,7 +340,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
         autoCreated: String
     ): CallParams {
         return CallParams(
-            refId = getOwnRefID(),
+            refId = appManager.getOwnRefID(),
             toRefIds = toRefIDs,
             mediaType = MediaType.VIDEO,
             callType = CallType.ONE_TO_MANY,
@@ -390,7 +383,7 @@ BaseViewModel @Inject constructor() : ViewModel() {
     fun getRefIDs(): java.util.ArrayList<String> {
         val refIdList = java.util.ArrayList<String>()
         groupModel.participants?.forEach { participant ->
-            if (participant.refID != getOwnRefID())
+            if (participant.refID != appManager.getOwnRefID())
                 participant.refID?.let { refIdList.add(it) }
         }
         return refIdList
