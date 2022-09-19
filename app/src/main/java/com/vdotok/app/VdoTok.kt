@@ -21,6 +21,7 @@ import javax.inject.Inject
  */
 @HiltAndroidApp
 class VdoTok : Application() {
+
     lateinit var appManager: AppManager
     @Inject set
     private var lifecycleEventObserver = LifecycleEventObserver { _, event ->
