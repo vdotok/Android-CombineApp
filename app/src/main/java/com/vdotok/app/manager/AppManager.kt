@@ -402,6 +402,10 @@ class AppManager(val context: Context) {
             override fun sessionHold(sessionUUID: String) {
             }
 
+            override fun sessionReconnecting(sessionID: String) {
+//                TODO("Not yet implemented")
+            }
+
         })
         chatClient?.listener = object : ChatManagerCallback {
             override fun connectionError() {
