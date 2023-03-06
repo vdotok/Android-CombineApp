@@ -25,7 +25,8 @@ IDE Installation & Build Guide
 Bravo! You’ve successfully configured the project in Android Studio.
 
 <b>Download Lib:</b>
-* Go to: https://sdk.vdotok.com/Android-SDKs/ and download “<b>streamingSDK.aar</b>” and “<b>connect.aar</b>” files
+* Open following link to get the latest “<b>Chat</b>” aar: https://sdk.vdotok.com/Android-SDKs/connect.aar
+* Open following link to get the latest “<b>Calling</b>” aar: https://sdk.vdotok.com/Android-SDKs/streamingSDK.aar
 
 <b>Configure Lib:</b>
 * In <b> Android Studio File Explorer</b>, select <b>Project</b>
